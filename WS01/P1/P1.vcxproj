@@ -139,7 +139,13 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClCompile Include="w1p1.cpp" />
+    <ClCompile Include="cStrTools.cpp" />
+    <ClCompile Include="Word.cpp" />
+    <ClCompile Include="WordStat.cpp" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="cStrTools.h" />
+    <ClInclude Include="Word.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

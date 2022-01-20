@@ -6,6 +6,7 @@
 *.db
 *.sln
 *.docx
+*.tmp
 Debug/
 ipch/
 x64/
