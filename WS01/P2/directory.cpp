@@ -7,7 +7,7 @@ Date    Sun Jan 23 2020
 Workshop 1 part 2
 Module: directory
 Desc:   main module that is caller of the initial functions of the Phone program
-Filename: direcotry.cpp
+Filename: directory.cpp
 -----------------------------------------------------------*/
 
 #include "Phone.h"
