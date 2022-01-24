@@ -6,7 +6,7 @@ Date    Sun Jan 23 2020
 
 Workshop 1 part 2
 Module: Phone
-Desc:   
+Desc:   Module that reads phone directory file and returns records that contain user input
 Filename: Phone.cpp
 -----------------------------------------------------------*/
 
@@ -21,7 +21,6 @@ using namespace std;
 #include "cStrTools.h"
 
 namespace sdds {
-
 
     void phoneDir(const char* programTitle, const char* fileName) {
 
@@ -44,7 +43,6 @@ namespace sdds {
         if (fptr != nullptr) {
 
             cout << "Enter a partial name to search (no spaces) or enter '!' to exit" << endl;
-
             cout << "> ";
 
             cin >> partialName;     // get user input
@@ -70,6 +68,7 @@ namespace sdds {
                 rewind(fptr);   // rewind file so we read from the beginning again
 
                 cout << "Enter a partial name to search (no spaces) or enter '!' to exit" << endl;
+                cout << "> ";
 
                 cin >> partialName;
 

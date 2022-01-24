@@ -6,7 +6,7 @@ Date    Sun Jan 23 2020
 
 Workshop 1 part 2
 Module: Phone
-Desc:   
+Desc:   Module that reads phone directory file and returns records that contain user input
 Filename: Phone.h
 -----------------------------------------------------------*/
 
