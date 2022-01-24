@@ -8,11 +8,11 @@ In this workshop I learned how to build a C++ application using modules. In part
 inluded 3 modules: the Phone module, the cStrTools module, and the directory module. The Phone and 
 cStrTools module are both made up of a header file and implementation file. I learned that in the header 
 files is where I should declare constant variables and function prototypes. In the implementation files is 
-where I define the functions. I learned C++ concepts such as namespaces. The cstring library and the 
-iostream library belong to a namespace called std. Unlike C, in C++ it is best practice to write code inside 
-of namespaces (in this workshop the namespaces I made are called sdds). I learned about the concept of 
-scopes. I was able to use functions and constant variables that are defined in other modules, by 
-including the header files and employing the "using" keyword. I learned how to safeguard header files to 
-minimize the risk that a header file will be included twice and result in bugs. I learned to print output 
-and read user input, as well as read from a file multiple times. Lastly, I learned how to use the g++ 
-compiler on matrix and also use valgrind to check for errors.
+where I define the functions. I learned C++ concepts such as namespaces. The objects and functions in 
+C++ libraries such as iostream belong to a namespace called std. Unlike C, in C++ it is best practice to 
+write code inside of namespaces (in this workshop the namespaces I made are called sdds). I learned 
+about the concept of scopes. I was able to use functions and constant variables that are defined in other 
+modules, by including the header files and employing the "using" keyword. I learned how to safeguard 
+header files to minimize the risk that a header file will be included twice and result in bugs. I learned to 
+print output and read user input, as well as read from a file multiple times. Lastly, I learned how to use 
+the g++ compiler on matrix and also use valgrind to check for errors.
