@@ -45,7 +45,9 @@ namespace sdds {
 
             cout << "Enter a partial name to search (no spaces) or enter '!' to exit" << endl;
 
-            cin >> partialName;
+            cout << "> ";
+
+            cin >> partialName;     // get user input
 
             if (strLen(partialName) == 1 && partialName[0] == '!') {
                 endProgram = true;
