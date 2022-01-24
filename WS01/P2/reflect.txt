@@ -16,3 +16,9 @@ modules, by including the header files and employing the "using" keyword. I lear
 header files to minimize the risk that a header file will be included twice and result in bugs. I learned to 
 print output and read user input, as well as read from a file multiple times. Lastly, I learned how to use 
 the g++ compiler on matrix and also use valgrind to check for errors.
+
+I encountered an issue when I attempted to make an extra function called int readFile(FILE* fp) to return 
+the number of lines in the text file. The parameter of that function kept giving me an error and I was 
+short on time, so I decided to write the entire program within the phoneDir function. My orginal plan 
+was to use that function to return n number of lines in the text file, and then I could then use dynamic 
+memory to store all the file information into a size n array of Phone structs. 
