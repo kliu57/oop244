@@ -19,11 +19,9 @@ namespace sdds {
     const int MAX_PLATE_LEN = 8;
 
     struct Car {
-        char plate[MAX_PLATE_LEN+1];
-
-        char* makeAndModel = nullptr;
-        
-        int time;
+        char plate[MAX_PLATE_LEN+1];    // stores license plate
+        char* makeAndModel;             // stores pointer to make and model cstring
+        int time;                       // stores integer time that car passed
     };
 
     // prints program start message

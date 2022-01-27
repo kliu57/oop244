@@ -11,7 +11,6 @@ Filename: Car.cpp
 -----------------------------------------------------------*/
 
 #include <cstdio>
-#include <string>
 #include <iostream>
 using namespace std;
 
@@ -20,12 +19,9 @@ using namespace std;
 
 namespace sdds {
 
-	int allocationSize;	// holds memory allocation and expansion size
-
-	int numCars;	// hold number of cars currently in dynamic array
-
-	int carArraySize;	// current allocation size of array
-
+	int allocationSize;		// holds memory allocation and expansion size
+	int numCars;			// hold number of cars currently in dynamic array
+	int carArraySize;		// current allocation size of array
 	Car* carPtr = nullptr;	// holds dynamic array of cars
 
 	void VBPLE_Title() {
@@ -40,12 +36,11 @@ namespace sdds {
 		numCars = 0;
 		carArraySize = allocSize;
 		allocationSize = allocSize;
-
-		carPtr = new Car[allocationSize];     // allocate dynamic memory
+		carPtr = new Car[allocationSize];	// allocate dynamic memory
 	}
 
 	void deallocate(Car& C) {
-		delete [] C.makeAndModel;	// deallocate memory
+		delete [] C.makeAndModel;			// deallocate dynamic memory
 		C.makeAndModel = nullptr;
 	}
 
@@ -69,9 +64,7 @@ namespace sdds {
 
 			read(C.plate, MAX_PLATE_LEN, ',');	// read license plate from input
 
-			read(timeStr, 5);	// read time from input
-
-			C.time = stoi(timeStr);	// read time from input
+			cin >> C.time;	// store time from input
 		}
 
 		return carRead;	// return flag
@@ -85,11 +78,13 @@ namespace sdds {
 
 	void record(const Car& C) {
 
+		int newCarArraySize = 0;
+
 		if (numCars == carArraySize) {	// check if car array is full
 
 			Car* newCarPtr = nullptr;
 
-			int newCarArraySize = carArraySize + allocationSize;
+			newCarArraySize = carArraySize + allocationSize;
 
 			newCarPtr = new Car[newCarArraySize];     // allocate dynamic memory
 
@@ -116,14 +111,12 @@ namespace sdds {
 	}
 
 	void endOfDay() {
-		for (int i = 0; i < numCars; i++) {	// print every car record
-			print(carPtr[i]);
-
-			//delete [] carPtr[i];
-			//carPtr[i] = nullptr;
+		for (int i = 0; i < numCars; i++) {	
+			print(carPtr[i]);		// print every car record
+			deallocate(carPtr[i]);	// deallocate dynamic memory for every car make and model
 		}
 
-		delete [] carPtr;	// deallocate dynamic memory
+		delete [] carPtr;	// deallocate dynamic memory for array of cars
 		carPtr = nullptr;
 	}
 }
