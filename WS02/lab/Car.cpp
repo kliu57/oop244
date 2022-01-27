@@ -70,7 +70,7 @@ namespace sdds {
 	}
 
 	void print(const Car& C) {
-		cout << C.time << ":";
+		cout << C.time << ": ";
 		cout << C.makeAndModel << ", ";
 		cout << C.plate << endl;
 	}
