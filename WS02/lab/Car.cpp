@@ -49,7 +49,6 @@ namespace sdds {
 		bool carRead = false;	// read success or fail flag
 		char makeAndModel[MAX_MAKE_AND_MODEL_LEN+1];
 		int makeAndModelLen = 0;
-		char timeStr[5];
 
 		read(makeAndModel, MAX_MAKE_AND_MODEL_LEN, ',');	// read user input make and model
 
