@@ -89,11 +89,6 @@ namespace sdds {
 
 			// copy all the cars from old to new array
 			for (int i = 0; i < carArraySize; i++) {
-
-				//newCarPtr[i].makeAndModel = carPtr[i].makeAndModel;
-				//strCpy(newCarPtr[i].plate, carPtr[i].plate);
-				//newCarPtr->time = carPtr->time;
-
 				newCarPtr[i] = carPtr[i];
 			}
 
