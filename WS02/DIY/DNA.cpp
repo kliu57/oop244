@@ -181,9 +181,10 @@ namespace sdds {
 	}
 
 	void displayMatches() {
+		cout << numDNA << " matches found:" << endl;		// display num matches found
 		for (int i = 0; i < numDNA; i++) {
-			cout << (i+1) << ") ";						// display row number
-			cout << dnaArrayPtr[i].id << ":" << endl;	// display id
+			cout << (i+1) << ") ";							// display row number
+			cout << dnaArrayPtr[i].id << ":" << endl;		// display id
 			cout << dnaArrayPtr[i].strandPtr << endl;		// display DNA strand
 			cout << "======================================================================" << endl;
 		}
