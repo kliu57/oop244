@@ -2,7 +2,7 @@ Workshop 2 part 2
 Katie Liu
 kliu57@myseneca.ca
 018889121
-Sun Jan 30 2020
+Sun Jan 30 2022
 
 In this workshop I learned how to allocate dynamic memory for a character array and also for an array of 
 structures. I also learned how to deallocate and free up the memory at the end and avoid any memory 
