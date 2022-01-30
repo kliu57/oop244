@@ -4,4 +4,19 @@ kliu57@myseneca.ca
 018889121
 Sun Jan 30 2020
 
-test
+In this workshop I learned how to allocate dynamic memory for a character array and also for an array of 
+structures. I also learned how to deallocate and free up the memory at the end and avoid any memory 
+leaks. I learned to use valgrind to debug my program and I was able to fix a memory leak I had during 
+part 1. I learned how to allocate memory to an array of objects even if we do not know at the beginning 
+how many objects there will be. First, I set the array to a default value such as 2. When the the array 
+gets full, I make a new array with a larger size (increment it by 2) and copy all the old array elements to 
+the new one. Then I deallocate the memory of the old array using the delete keyword and I set the old 
+array pointer to point to the new array. In part 2, I also learned to parse through a text file using the 
+ifstream object. Lastly, I learned to overload functions and validate data before I store them into my 
+array.
+
+One issue that caused me difficulty was finding out where my memory leak was in part one. I fixed it by 
+going through all the places that I used the new keyword to allocate memory and I realized I did not 
+deallocate one of them. In part 2, my biggest issue was learning how to parse through the text file using 
+ifstream. I created a temporary function to just parse through the file and print out all the contents so 
+that I could learn how to use the ifstream object. I then applied this to my read function.
