@@ -53,6 +53,8 @@ namespace sdds {
 	bool beginSearch(const char *filename) {
 		bool result = false;
 
+		cout << "DNA search program" << endl;	// print opening message
+
 		f.open(filename);		// connects input filename to ifstream object
 
 		if (f.is_open()) {		// proceed if file opened successfully
