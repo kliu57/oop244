@@ -63,7 +63,9 @@ namespace sdds {
     // spaces in the cString)
     void read(std::ifstream* fptr, char* cString, unsigned int maxSize, char delimiter = '\n');
 
-
+    // reads from file an integer
+    // returns the integer if it meets min size and max size
+    // returns -1 if it does not or an integer could not be read
     int readPositiveInt(std::ifstream* fptr, int minSize, int maxSize);
 }
 

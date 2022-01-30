@@ -43,9 +43,6 @@ namespace sdds {
     // Returns true if at least one match is found and false if no match is found in the records
     bool read(const char* subDNA);
 
-    // FOR TESTING ONLY - run thru the file and prints out contents
-    void runThru();
-
     // Sorts the dynamic array of DNA matches found in the file based on the ids in ascending order
     void sort();
 

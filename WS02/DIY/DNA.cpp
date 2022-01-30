@@ -18,7 +18,6 @@ using namespace std;
 #include "DNA.h"
 #include "cStrTools.h"
 
-
 namespace sdds {
 
 	int numDNA;					// number of DNA currently in array of DNA objects
@@ -44,14 +43,12 @@ namespace sdds {
 					k = STRAND_NUM_ALLOWED_CHARS;
 				}
 			}
-
 			// if current character is not validated at this point, the loop will end
 		}
 
 		// returns true if all the characters are validated, false if any are not
 		return validChar;
 	}
-
 
 	bool beginSearch(const char *filename) {
 		bool result = false;
@@ -163,70 +160,13 @@ namespace sdds {
 		return matchFound;
 	}
 
-	void runThru() {
-
-		bool abort = false;		// set this to true when we find an error and want to exit loop
-		int idNum = -1;
-		char delim = 'x';
-		char strand[MAX_STRAND_LEN+1] = {0};
-		int strandLen = 0;
-
-		if (f.is_open()) {
-			while (f.good() && !abort) {
-
-				idNum = readPositiveInt(&f, MIN_ID_SIZE, MAX_ID_SIZE);		// read id
-
-				if (idNum != -1) {	// valid id was read
-
-					if (f.good()) {	// EOF not reached after id so proceed
-
-						f.get(delim);	// reads one character (delimiter)
-
-						if (f.good() && delim == ',') {		// valid delimiter was read
-
-							read(&f, strand, MAX_STRAND_LEN);	// read strand
-							strandLen = strLen(strand);
-
-							if (validateStrand(strand, MIN_STRAND_LEN)) {	// valid strand was read
-
-								// print data from line read
-								cout << idNum;
-								cout << delim;
-								cout << strand << endl;
-
-							} else {
-								cout << "\n**Unexpected Error in runThru- Invalid strand read**\n";
-								abort = true;
-							}
-						} else {
-							cout << "\n**Unexpected Error in runThru- Invalid delimiter read**\n";
-							abort = true;
-						}
-					} else {
-						cout << "\n**Unexpected Error in runThru- EOF reached following id read**\n";
-						abort = true;
-					}
-				} else if (idNum == -1 && !f.eof()) {
-					cout << "\n**Unexpected Error in runThru- Invalid id read**\n";
-					abort = true;
-				} else {
-					// read an invalid ID! but it is ok its EOF
-				}
-			} // end of while loop
-		} else {
-			cout << "\n**Unexpected Error in runThru- File is not open**\n";
-		}
-
-		f.close();	// close source file
-	}
-
 	void sort() {	// uses selection sort
 		int i, j, m;
 		DNA temp;
 
-		for (i = 0; i < dnaArraySize; i++) {
+		for (i = 0; i < numDNA; i++) {
 			m = i;
-			for (j = i + 1; j < dnaArraySize; j++)
+			for (j = i + 1; j < numDNA; j++)
 				if (dnaArrayPtr[j].id < dnaArrayPtr[m].id) {
 					m = j;
 				}
