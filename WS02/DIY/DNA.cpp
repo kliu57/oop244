@@ -66,6 +66,8 @@ namespace sdds {
 	}
 
 	void deallocate() {
+		cout << "DEALLOCATE FUNC CALLED" << endl;
+
 		for (int i = 0; i < numDNA; i++) {	
 			delete [] dnaArrayPtr[i].strandPtr;			// deallocate dynamic memory for strand
 			dnaArrayPtr[i].strandPtr = nullptr;
@@ -73,6 +75,9 @@ namespace sdds {
 
 		delete [] dnaArrayPtr;	// deallocate dynamic memory for array of dnas
 		dnaArrayPtr = nullptr;
+
+		numDNA = 0;			// set numDNA to 0 for next search
+		dnaArraySize = 0;	// set array size counter to 0 for next search
 	}
 
 	bool read(const char* subDNA) {
@@ -158,6 +163,9 @@ namespace sdds {
 		} else {
 			cout << "\n**Unexpected Error in runThru- File is not open**\n";
 		}
+
+		f.clear();		// reset the file so this function can run again
+		f.seekg(0);		// set the position of the character to be extracted from input stream back to starting point
 
 		return matchFound;
 	}

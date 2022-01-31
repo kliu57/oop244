@@ -12,6 +12,7 @@ Filename: cStrTools.cpp
 
 #include <cstdio>
 #include <iostream>
+#include <fstream>
 using namespace std;
 
 #include "cStrTools.h"

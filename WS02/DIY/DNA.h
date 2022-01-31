@@ -36,17 +36,19 @@ namespace sdds {
     // Returns true if the file is opened successfully and returns false it fails to open the file
     bool beginSearch(const char *filename);
 
-    // deletes allocated memory pointed by the make and model pointer in the Car structure, then set it to nullptr
+    // deletes allocated memory and resets counter
+    // must be called after each successful read function
     void deallocate();
 
     // Dynamically creates an array of DNA records to the number of matches found in the file and stores the matches in them
     // Returns true if at least one match is found and false if no match is found in the records
+    // deallocate function must be called after each sucessful read function
     bool read(const char* subDNA);
 
     // Sorts the dynamic array of DNA matches found in the file based on the ids in ascending order
     void sort();
 
-    // formats and prints car object
+    // formats and prints all the matches found by read
     void displayMatches();
 
     // function called at the end of the program
