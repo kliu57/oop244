@@ -12,6 +12,8 @@ Filename: cStrTools.h
 #ifndef SDDS_CSTRTOOLS_H
 #define SDDS_CSTRTOOLS_H 
 
+#include <fstream>
+
 namespace sdds {
 
     // returns the lower case value of a character
