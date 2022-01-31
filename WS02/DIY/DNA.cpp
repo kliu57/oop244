@@ -66,8 +66,6 @@ namespace sdds {
 	}
 
 	void deallocate() {
-		cout << "DEALLOCATE FUNC CALLED" << endl;
-
 		for (int i = 0; i < numDNA; i++) {	
 			delete [] dnaArrayPtr[i].strandPtr;			// deallocate dynamic memory for strand
 			dnaArrayPtr[i].strandPtr = nullptr;
