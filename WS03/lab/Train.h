@@ -52,6 +52,7 @@ namespace sdds {
         bool isSafeEmpty() const;
 
         // prints formatted object info to standard output
+        // if object is in safe empty state print "Safe Empty State!" message instead
         void display() const;
     };
 }

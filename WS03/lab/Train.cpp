@@ -70,14 +70,20 @@ namespace sdds {
 	}
 
 	void Train::display() const {
-		int oldPrecision = cout.precision();
-		cout << "NAME OF THE TRAIN : " << name << endl;			// print name
-		cout << "NUMBER OF PEOPLE  : " << numPeople << endl;	// print number of people
-		cout << "SPEED             : ";
-		cout.setf(ios::fixed);						// set fixed format
-		cout.precision(DISPLAY_SPEED_PRECISION);	// change precision for speed display
-		cout << speed << " km/h" << endl;			// print speed
-		cout.unsetf(ios::fixed);					// unset fixed format
-		cout.precision(oldPrecision);				// change precision back
+
+		if (!Train::isSafeEmpty()) {	// check if object is empty
+
+			int oldPrecision = cout.precision();
+			cout << "NAME OF THE TRAIN : " << name << endl;			// print name
+			cout << "NUMBER OF PEOPLE  : " << numPeople << endl;	// print number of people
+			cout << "SPEED             : ";
+			cout.setf(ios::fixed);						// set fixed format
+			cout.precision(DISPLAY_SPEED_PRECISION);	// change precision for speed display
+			cout << speed << " km/h" << endl;			// print speed
+			cout.unsetf(ios::fixed);					// unset fixed format
+			cout.precision(oldPrecision);				// change precision back
+		} else {
+			cout << "Safe Empty State!" << endl;		// print safe empty state message
+		}
 	}
 }
