@@ -4,4 +4,21 @@ kliu57@myseneca.ca
 018889121
 Sun Feb 6 2022
 
-test
+In this workshop I learned about class encapsulation, which is using a class with variables and member 
+functions bundled up together instead of using global functions. I learned to define a class, and define 
+and implement member functions for that class. Through this lab I learned about class privacy. Any 
+member function of the class can access and change the value of the instance variables. If I wanted a 
+member function to not have the ability to change the value and only "read", then I would include the 
+keyword "const" at the end of my function name. In this workshop and most of the time when working 
+with classes, the instance variables are kept private and so are the helper functions. Private functions 
+and variables cannot be accessed by other modules like main.cpp, but public member functions can. 
+Member functions are always called with an object (the name of that instance). Lastly, I learned how to 
+initialize an object to a safe empty state to signify that the object is "empty" or it does not yet hold valid 
+values. I always do checks to ensure I do not try to do operations with the object when it is in that safe 
+empty state. 
+
+One issue that caused me difficulty was I made a mistake when I created the global function transfer, 
+which moves passengers from one Train to another. I was passing the Train objects in by value instead 
+of by reference, and thus the values of the objects were not updating even after the transfer function 
+completed successfully. I realized eventually that the reason the values were not updating is because I 
+was passing copies of the Train objects and not changing the original instances at all. 
