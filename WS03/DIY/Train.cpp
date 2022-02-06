@@ -72,7 +72,7 @@ namespace sdds {
 
 		if (!Train::isSafeEmpty()) {	// check if object is empty
 
-			int oldPrecision = cout.precision();
+			streamsize oldPrecision = cout.precision();
 			cout << "NAME OF THE TRAIN : " << name << endl;			// print name
 			cout << "NUMBER OF PEOPLE  : " << numPeople << endl;	// print number of people
 			cout << "SPEED             : ";
@@ -93,10 +93,15 @@ namespace sdds {
 		if (!isSafeEmpty()) {	// check if train contains valid values
 			newNumPeople = numPeople + addNumPeople;	// calculate new number of people in train
 
-			if (newNumPeople >= 0 && newNumPeople <= MAX_PEOPLE) {	// check if new number of people is valid
-				numPeople = newNumPeople;	// set new value to instance variable
-				result = true;
+			if (newNumPeople < 0) {
+				numPeople = 0;		// if new numPeople is below 0 set to 0
+			} else if (newNumPeople > MAX_PEOPLE) {
+				numPeople = MAX_PEOPLE;	// if new numPeople is above max numPeople set to max
+			} else {
+				numPeople = newNumPeople;	// set new numPeople
 			}
+
+			result = true;
 		}
 
 		return result;
@@ -110,22 +115,26 @@ namespace sdds {
 		if (!isSafeEmpty()) {	// check if train contains valid values
 			newSpeed = speed + addSpeed;	// calculate new speed
 
-			if (newSpeed >= 0 && newSpeed <= MAX_SPEED) {	// check if new speed is valid
-				speed = newSpeed;	// set new value to instance variable
+			if (newSpeed < 0) {
+				speed = 0;	// if new speed is below 0 set to 0
+			} else if (newSpeed > MAX_SPEED) {
+				speed = MAX_SPEED;	// if new speed is above max speed set to max speed
+			} else {
+				speed = newSpeed;	// set new speed
 			}
+
+			result = true;
 		}
 
 		return result;
 	}
 
-	int transfer(Train first, Train second) {
+	int transfer(Train &first, Train &second) {
 		int numPeopleMoved = -1;	// operation success/fail flag
 		int numPeopleToMove = 0;
 		int numInFirst = 0;
 		int numInSecond = 0;
 		int spaceInFirst = 0;
-		bool load1;
-		bool load2;
 
 		if (!first.isSafeEmpty() && !second.isSafeEmpty()) {	// only proceed if neither Train is in safe empty state
 
@@ -135,10 +144,7 @@ namespace sdds {
 			spaceInFirst = MAX_PEOPLE - numInFirst;		// calculate space availability in first train
 			numPeopleToMove = spaceInFirst < numInSecond ? spaceInFirst : numInSecond;	// number of people to move is the smaller number between the two
 
-			load1 = first.loadPeople(numPeopleToMove);
-			load2 = second.loadPeople(numPeopleToMove*-1);
-
-			if (load1 && load2) {	// check if operation succeeded
+			if (first.loadPeople(numPeopleToMove) && second.loadPeople(numPeopleToMove*-1)) {	// check if operation succeeded
 				numPeopleMoved = numPeopleToMove;
 			} else {
 				cout << "Unexpected error in Train.cpp- transfer" << endl;	// this should never occur

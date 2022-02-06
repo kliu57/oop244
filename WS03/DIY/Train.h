@@ -56,12 +56,14 @@ namespace sdds {
         void display() const;
         
         // changes the number of people on a train by input parameter value
-        // operation only goes through if object is not in safe empty state and new number of people is valid
+        // operation only goes through if object is not in safe empty state
+        // if new number is below 0 set to zero, if above MAX_PEOPLE set to MAX_PEOPLE
         // returns true if operation succeeds, false otherwise
         bool loadPeople(int);
 
         // changes the speed of a train by input parameter value
-        // operation only goes through if object is not in safe empty state and new speed is valid
+        // operation only goes through if object is not in safe empty state
+        // if new speed is below 0 set to zero, if above MAX_SPEED set to MAX_SPEED
         // returns true if operation succeeds, false otherwise
         bool changeSpeed(double);
     };
@@ -69,7 +71,7 @@ namespace sdds {
     // moves as many passengers as possible from the second Train to the first Train
     // validates Train objects and final values
     // returns number of people moved if operation succeeded, -1 otherwise
-    int transfer(Train, Train);
+    int transfer(Train &first, Train &second);
 }
 
 #endif // ! SDDS_TRAIN_H
