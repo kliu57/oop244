@@ -46,7 +46,7 @@ namespace sdds {
 			brand != nullptr &&
 			model != nullptr &&
 			year >= MIN_YEAR &&
-			code >= MIN_CODE && m_code <= MAX_CODE &&
+			code >= MIN_CODE && code <= MAX_CODE &&
 			price > 0
 			) {
 			result = true;
@@ -60,14 +60,8 @@ namespace sdds {
 	}
 
 	CarInventory::CarInventory(const char* type, const char* brand, const char* model, int year, int code, double price) {
-		// check if arguments are valid
-		if (type != nullptr &&
-			brand != nullptr &&
-			model != nullptr &&
-			year >= MIN_YEAR &&
-			code >= MIN_CODE && m_code <= MAX_CODE &&
-			price > 0
-			) {
+		
+		if (validateCarInfo(type, brand, model, year, code, price)) {	// check if arguments are valid
 			// set member variables to arguments
 			
 			m_type = new char[strlen(type)+1];		// allocate dynamic memory for type based on length of argument string
