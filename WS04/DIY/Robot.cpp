@@ -14,6 +14,7 @@ Filename: Robot.cpp
 #include <cstdio>
 #include <iostream>
 #include <cstring>
+#include <string>
 using namespace std;
 
 #include "Robot.h"
@@ -230,7 +231,19 @@ namespace sdds {
 	void printReportSummary(const Robot robot[], int num_robots, int numDeployed, int fastest) {
 		cout << "|=============================================================================|" << endl;
 		cout << "| SUMMARY:                                                                    |" << endl;
-		cout << "| " << numDeployed << "  robots are deployed.                                                     |" << endl;
+		
+		cout << "| ";
+
+		cout.setf(ios::left);	// set left align
+
+		cout.width(75);
+		cout << to_string(numDeployed) + "  robots are deployed.";	// by converting the int to string we can ensure the formatting is
+																	// corect no matter how many digits the integer is
+
+		cout.unsetf(ios::left);	// unset left align
+
+		cout << " |" << endl;
+
 		cout << "| The fastest robot is:                                                       |" << endl;
 		cout << "| Robot ID   | Location        | Weight |  Width | Height |  Speed | Deployed |" << endl;
 		cout << "|------------+-----------------+--------+--------+--------+--------+----------|" << endl;
