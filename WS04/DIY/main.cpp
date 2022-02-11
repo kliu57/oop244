@@ -29,7 +29,7 @@ int main()
 		{"KC2", "kitchen", 20.56, 5, 2, 3.5, true},
 		{"BR2", "bedroom", 25.32, 6.5, 2.5, 3.1, true}
 	};
-	
+
 	while ( (broken_robot = conrtolRooomReport(robot, num_robots) ) >= 0) {
 		cout << endl << "Attention: There is a broken robot! Fixing the problem..." << endl;
 		robot[broken_robot].set(replacmentName, "Control Room", 10.0, 4, 1, 2.09, false).display();
