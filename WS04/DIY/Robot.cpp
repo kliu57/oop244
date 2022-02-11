@@ -115,7 +115,7 @@ namespace sdds {
 	Robot& Robot::set(const char* name, const char* location, double weight, double width, double height, double speed, bool isDeployed) {
 		deallocMemory();	// deallocate memory if any
 
-		// check if arguments are valid
+							// check if arguments are valid
 		if (validateRobotInfo(name, location, weight, width, height, speed)) {
 
 			// set member variables to arguments
@@ -229,9 +229,9 @@ namespace sdds {
 
 	void printReportSummary(const Robot robot[], int num_robots, int numDeployed, int fastest) {
 		cout << "|=============================================================================|" << endl;
-		cout << "| SUMMARY: " << endl;
-		cout << "| " << numDeployed << "  robots are deployed.  " << endl;
-		cout << "| The fastest robot is: " << endl;
+		cout << "| SUMMARY:                                                                    |" << endl;
+		cout << "| " << numDeployed << "  robots are deployed.                                                     |" << endl;
+		cout << "| The fastest robot is:                                                       |" << endl;
 		cout << "| Robot ID   | Location        | Weight |  Width | Height |  Speed | Deployed |" << endl;
 		cout << "|------------+-----------------+--------+--------+--------+--------+----------|" << endl;
 		robot[fastest].display();
@@ -253,7 +253,7 @@ namespace sdds {
 
 			if (robot[i].display()) { // display printed successfully, robot was valid
 
-				// check if robot is deployed
+									  // check if robot is deployed
 				if (robot[i].isDeployed()) {
 					numDeployedBots++;		// increment counter of deployed bots
 				}
