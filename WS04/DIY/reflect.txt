@@ -1,0 +1,25 @@
+Workshop 4 part 2
+Katie Liu
+kliu57@myseneca.ca
+018889121
+Sat Feb 12 2022
+
+In this workshop I learned to use constructors to initialize class member variables to a safe empty state. I 
+also learned to use destructors to deallocate dynamic memory right before the object goes out of scope. 
+I learned how to use public member functions of the iostream library object cout to format data. 
+Specifically, in this workshop, I used the set() and unset() member functions to control the formatting 
+and then used width and precision functions to control how much space the text should take up and 
+how many decimals of a double to display. I created private member functions such as setSafeEmpty() 
+and deallocMemory() to be used inside my public member functions to get rid of repeating code. I 
+learned to overload constructors so that aside from the default constructor we can have a constructor 
+that can set an object to user-defined values at the time of the object's creation. I learned to create 
+public helper functions that can access an object's member variables through public member functions. 
+Lastly, I learned to do validation before trying to store or work with data, and I set the object to a safe 
+empty state when any input data does not pass validation.
+
+Issues that caused me difficulty was debugging a valgrind error that said I was trying to access undefined 
+values. I eventually figured out that I was trying to access a member variable before it was initialized. 
+This was a typo as I typed "m_code" (member variable name) instead of "code" (parameter name). 
+Another issue that caused me difficulty was debugging my for loop in the conrtolRooomReport function. 
+It was causing an infinite loop in the testing program. Eventually I found out I was returning the index+1 
+rather than the index of the array element, and I was able to fix the problem.

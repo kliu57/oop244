@@ -2,7 +2,7 @@
 Author	Katie Liu
 Email   kliu57@myseneca.ca
 ID      018889121
-Date    Sun Feb 13 2022
+Date    Sat Feb 12 2022
 
 Workshop 4 part 2
 Module: Robot
@@ -282,8 +282,6 @@ namespace sdds {
 				invalidBotFound = true;		// quit the loop when invalid robot found
 				index = i;	// set return value to index
 			}
-
-
 		}
 
 		// generate summary only if no invalids were found
