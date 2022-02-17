@@ -12,7 +12,7 @@ Filename: Flight.cpp
 #ifndef SDDS_FLIGHT_H
 #define SDDS_FLIGHT_H
 #include <iostream>
-#include <string>
+
 
 namespace sdds {
 
@@ -43,9 +43,6 @@ namespace sdds {
 
       // returns flight title
       operator const char*() const;
-
-      // returns flight title
-      operator const std::string() const;
 
       // returns true if the Flight number of passengers is 0, otherwise false
       bool operator ~() const;

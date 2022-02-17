@@ -95,12 +95,8 @@ namespace sdds {
         return m_title;
     }
 
-    Flight::operator const std::string() const {
-        return m_title;
-    }
-
     bool Flight::operator ~() const {
-        return bool(m_passengers == 0);
+        return (m_passengers == 0);
     }
 
     Flight& Flight::operator=(Flight& assignTo) {
