@@ -104,18 +104,22 @@ namespace sdds {
     }
 
     Flight& Flight::operator=(Flight& assignTo) {
-        emptyPlane();   // set current object to empty
-        int passengers = (int)assignTo;
-        double fuel = (double)assignTo;
-        // set current flight object to argument object if argument object is valid
-        if (passengers > 0 && passengers <= Boen747Capacity && fuel >= 0 &&
-            fuel <= FuelTankCapacity) {
+        int passengers = 0;
+        double fuel = 0;
+        // only proceed if argument object is not current object
+        if (this != &assignTo) {
+            emptyPlane();   // set current object to empty
+            passengers = (int)assignTo;
+            fuel = (double)assignTo;
+
+            // set new values to current object member variables
             m_passengers = passengers;
             m_fuel = fuel;
             strcpy(m_title, (const char*)assignTo);
+
+            // set argument object to empty
+            assignTo.emptyPlane();
         }
-        // set argument object to empty
-        assignTo.emptyPlane();
         return *this;
     }
 
@@ -189,15 +193,16 @@ namespace sdds {
         return *this;
     }
 
-    Flight& Flight::operator<<(Flight &moveFrom) {
+    Flight& Flight::operator<<(Flight& moveFrom)
+    {
         int space = 0;
         int moveWaitlist = 0;
         int numMoved = 0;   // will store the number of people actually moved over
         // only proceed if the argument flight is not the current object and both objects are valid
-        if (!(*this = moveFrom) && *this && moveFrom) {
+        if (this != &moveFrom && this && moveFrom) {
             space = Boen747Capacity - m_passengers; // space is number of free seats in this flight object
             moveWaitlist = (int)moveFrom;           // waitlist number is number of people in argument flight
-            // check if there is space to move everyone who wants to move
+                                                    // check if there is space to move everyone who wants to move
             if (space < moveWaitlist) {
                 m_passengers = Boen747Capacity;     // fill to max
                 numMoved = space;                   // number of people moved is equal to available space
@@ -210,13 +215,12 @@ namespace sdds {
         return *this;
     }
 
-    Flight& Flight::operator>>(Flight &moveTo) {
+    Flight& Flight::operator>>(Flight& moveTo) {
         int space = 0;
         int moveWaitlist = 0;
         int numMoved = 0;   // will store the number of people actually moved over
         // only proceed if the argument flight is not the current object and both objects are valid
-        if (!(*this = moveTo) && *this && moveTo) {
-
+        if (this != &moveTo && this && moveTo) {
             space = Boen747Capacity - (int)moveTo;  // space is number of free seats in argument flight
             moveWaitlist = m_passengers;            // waitlist number is number of people in this flight
 
@@ -237,14 +241,14 @@ namespace sdds {
 
     int operator+(const Flight& flightA, const Flight& flightB) {
         int sum = 0;
-        if (*flightA && *flightB) {
-            sum = (int)*flightA + (int)*flightB;
+        if (flightA && flightB) {
+            sum = (int)flightA + (int)flightB;
         }
         return sum;
     }
 
-    int operator+=(int* numPtr, const Flight& flight) {
-        *numPtr += (int)flight;
-        return *numPtr;
+    int operator+=(int& numPtr, const Flight& flight) {
+        numPtr += (int)flight;
+        return numPtr;
     }
 }

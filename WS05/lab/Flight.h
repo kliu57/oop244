@@ -33,16 +33,15 @@ namespace sdds {
       std::ostream& display()const;
 
       // return true if flight non-empty and fuel not low fuel
-      explicit operator bool() const;
+      operator bool() const;
 
       // returns flight number of passengers
       operator int() const;
 
       // returns flight fuel
-      explicit operator double() const;
+      operator double() const;
 
       // returns flight title
-      // NOTE: THIS IS NOT REQUIRED BY ASSIGNMENT INSTRUCTIONS BUT IT IS CALLED BY TESTING PROGRAM
       operator const char*() const;
 
       // returns flight title
@@ -87,12 +86,12 @@ namespace sdds {
       // move passengers from argument flight to this flight
       // only move up to the max amount of passengers in this flight
       // returns reference to current Flight object
-      Flight& operator<<(Flight &moveFrom);
+      Flight& operator<<(Flight& moveFrom);
 
       // move passengers from this flight to the argument flight
       // only move up to the max amount of passengers in argument flight
       // returns reference to current Flight object
-      Flight& operator>>(Flight &moveTo);
+      Flight& operator>>(Flight& moveTo);
    };
 
    // returns the sum of the number of passengers of the two Flights
@@ -101,6 +100,6 @@ namespace sdds {
 
    // adds num passengers from flight to number stored at integer pointer
    // returns integer value stored at pointer
-   int operator+=(int* numPtr, const Flight& flight);
+   int operator+=(int& numPtr, const Flight& flight);
 }
 #endif // SDDS_FLIGHT_H
