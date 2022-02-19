@@ -1,15 +1,13 @@
 /* ------------------------------------------------------
+Author	Katie Liu
+Email   kliu57@myseneca.ca
+ID      018889121
+Date    Sat Feb 19 2022
+
 Workshop 5 part 2
 Module: Portfolio
+Desc:   Module for Portfolio object and functions
 Filename: Portfolio.cpp
-Version 1.0
-Date: 24/11/2021
-Author: Asam Gulaid
-Revised by: Fardad Soleimanloo
-Revision History
------------------------------------------------------------
-Initials    Date           Reason
-F.S.        07/02/2022     Peer Review
 -----------------------------------------------------------*/
 #define _CRT_SECURE_NO_WARNINGS
 
@@ -17,7 +15,6 @@ F.S.        07/02/2022     Peer Review
 
 using namespace std;
 namespace sdds {
-
 
     Portfolio::Portfolio() {
        emptyPortfolio();
@@ -68,7 +65,73 @@ namespace sdds {
         return cout;
     }
 
+    Portfolio::operator double() const {
+        return m_value;
+    }
 
+    Portfolio::operator const char* () const {
+        return m_stock;
+    }
 
+    Portfolio::operator char() const {
+        return m_type;
+    }
 
+    Portfolio::operator bool() const {
+        return (m_type == 'G' || m_type == 'V' || m_type == 'I');   // true if investment type is initiated valid type
+    }
+
+    Portfolio& Portfolio::operator+=(double value) {
+        if (value > 0 && *this) {  // proceed only if value and object are valid
+            m_value += value;
+        }
+        return *this;
+    }
+
+    Portfolio& Portfolio::operator-=(double value) {
+        if (value < 0 && *this) {  // proceed only if value and object are valid
+            m_value -= value;
+
+            // set portfolio to empty if value is now <= 0
+            if (m_value <= 0) {
+                emptyPortfolio();
+            }
+        }
+        return *this;
+    }
+
+    bool Portfolio::operator~() const {
+        return m_value < 0;     // true if object has invalid (negative) m_value
+    }
+
+    Portfolio& Portfolio::operator<<(Portfolio& moveFrom) {
+        // only proceed if the argument object is not the current object and both objects are valid
+        if (this != &moveFrom && *this && moveFrom) {
+            m_value += (double)moveFrom;    // increment value of current object by value of argument object
+            moveFrom.emptyPortfolio();               // set argument object to empty
+        }
+        return *this;
+    }
+
+    Portfolio& Portfolio::operator>>(Portfolio& moveTo) {
+        // only proceed if the argument object is not the current object and both objects are valid
+        if (this != &moveTo && *this && moveTo) {
+            moveTo += m_value;      // increment value of argument object by value of current object
+            emptyPortfolio();       // set current object to empty
+        }
+        return *this;
+    }
+
+    double operator+(const Portfolio& portfolioA, const Portfolio& portfolioB) {
+        double sum = 0;    // returns 0 if if either object is false
+        if (portfolioA && portfolioB) {
+            sum = (double)portfolioA + (double)portfolioB;
+        }
+        return sum;
+    }
+
+    double operator+=(double& numPtr, const Portfolio& portfolio) {
+        numPtr += (double)portfolio;
+        return numPtr;
+    }
 }
