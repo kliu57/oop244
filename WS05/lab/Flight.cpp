@@ -195,7 +195,7 @@ namespace sdds {
         int moveWaitlist = 0;
         int numMoved = 0;   // will store the number of people actually moved over
         // only proceed if the argument flight is not the current object and both objects are valid
-        if (this != &moveFrom && this && moveFrom) {
+        if (this != &moveFrom && *this && moveFrom) {
             space = Boen747Capacity - m_passengers; // space is number of free seats in this flight object
             moveWaitlist = (int)moveFrom;           // waitlist number is number of people in argument flight
                                                     // check if there is space to move everyone who wants to move
@@ -216,7 +216,7 @@ namespace sdds {
         int moveWaitlist = 0;
         int numMoved = 0;   // will store the number of people actually moved over
         // only proceed if the argument flight is not the current object and both objects are valid
-        if (this != &moveTo && this && moveTo) {
+        if (this != &moveTo && *this && moveTo) {
             space = Boen747Capacity - (int)moveTo;  // space is number of free seats in argument flight
             moveWaitlist = m_passengers;            // waitlist number is number of people in this flight
 
