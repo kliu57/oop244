@@ -89,7 +89,7 @@ namespace sdds {
     }
 
     Portfolio& Portfolio::operator-=(double value) {
-        if (value < 0 && *this) {  // proceed only if value and object are valid
+        if (value > 0 && *this) {  // proceed only if value and object are valid
             m_value -= value;
 
             // set portfolio to empty if value is now <= 0
