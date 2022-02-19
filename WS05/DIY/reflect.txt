@@ -2,8 +2,25 @@ Workshop 5 part 2
 Katie Liu
 kliu57@myseneca.ca
 018889121
-Sat Feb 17 2022
+Sat Feb 19 2022
 
-In this workshop I learned to 
+In this workshop I learned to overload operators in a class. I overloaded unary operators (=,  +, ~) and 
+binary operator (+=, -=, >>, <<). I learned the syntax to overload member operators as well as public 
+operators, and I practiced using my overloaded operators. Using these overloaded operators made 
+coding faster and more intuitive. For example, it is more efficient to assign passengers using the 
+overloaded assignment operator than it is to call a query function like getPassengers(). Overloaded 
+operators also allow for cascading to happen. In the case that a function is assigning a value from one 
+object to another, I learned to always check that the two memory locations are not identical. I learned 
+to define type conversion operators which allow class objects to be cast to a different type, such as a 
+boolean, integer, double etc. For example, by defining the bool conversion operator for the Flight class, I 
+could cast the flight object to a boolean that tells us whether the object has valid values. Similarly, by 
+defining more conversion operators, I could also cast the flight object to an int to represent the number 
+of passengers it has, or a double representing how much fuel it has.
 
-Issues that caused me difficulty 
+Issues that caused me difficulty was debugging ambiguities that arose from using my conversion 
+operators. I forgot to put "(int)" when I tried to cast an object to an integer and that caused my compiler 
+to not understand which function to call. I eventually fixed the problem. I was also having trouble 
+understanding when to use "*" and when to use "&" in my code. I eventually understood that "&" is for 
+passing by reference and that is similar to passing by object except we are accessing the original object 
+instead of a copy of the object. "*" is for passing by pointer and a pointer is not an object but only a 
+memory location. 
