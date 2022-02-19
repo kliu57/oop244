@@ -10,7 +10,7 @@ Desc:   Module for Portfolio object and functions
 Filename: Portfolio.cpp
 -----------------------------------------------------------*/
 #define _CRT_SECURE_NO_WARNINGS
-
+#include <cstring>
 #include "Portfolio.h"
 
 using namespace std;
