@@ -26,8 +26,8 @@ int main() {
     HealthCard C{ "Gandalf The Grey",111,"XL","123234LA"};
     ifstream CardFile("HealthCardInfo.csv");
     ofstream goodCardFile("goodInfo.csv");
-    validationTest();
-    dataEntryTest();
+    //validationTest();
+    //dataEntryTest();
     for (i = 0; i < recs; i++) {
         C = ReadCardFromFile(CardFile);
         cout << C << endl;

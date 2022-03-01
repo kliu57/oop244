@@ -117,6 +117,7 @@ namespace sdds {
 				// prints data in comma-separated format
 				ostr << m_name << ',';
 				printIDInfo(ostr);
+				ostr << endl;
 			} else {
 				streamsize oldPrecision = ostr.precision();	// save precision
 				ostr.setf(ios::left);	// set left align
@@ -130,6 +131,7 @@ namespace sdds {
 				ostr.precision(oldPrecision);	// change precision back
 
 				printIDInfo(ostr);
+				ostr << endl;
 			}
 		}
 		return ostr;
@@ -147,19 +149,15 @@ namespace sdds {
 		extractChar(istr, '-');						// read and discard dash
 		istr.get(r_vCode, MaxVerLength+1, ',');		// read the version code up to MaxVerLength or a comma and store
 		extractChar(istr, ',');						// read and discard comma
-		istr.getline(r_sNumber, MaxSCLength+1, '\n');	// read the version code up to MaxSCLength or newline and store
+		istr.get(r_sNumber, MaxSCLength+1, '\n');	// read the version code up to MaxSCLength or newline and store
+		extractChar(istr, '\n');						// read and discard newline
 
 		if (!istr.fail()) {		// checks if istr is in a failed state
 			set(r_name, r_num, r_vCode, r_sNumber);	// set object to read values
-
-			istr.clear();	
-		}
-		else {
-			istr.clear();				// clears state to allow further extraction
-			istr.ignore(2000, '\n');	// clears the input buffer
 		}
 
-
+		istr.clear();				// clears state to allow further extraction
+		istr.ignore(2000, '\n');	// clears the input buffer
 
 		return istr;
 	}
@@ -170,7 +168,7 @@ namespace sdds {
 		if (hc) {
 			hc.print(ostr, false);
 		} else {
-			ostr << "Invalid Health Card Record";
+			ostr << "Invalid Health Card Record" << endl;
 		}
 		return ostr;
 	}
