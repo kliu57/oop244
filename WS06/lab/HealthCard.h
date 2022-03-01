@@ -1,3 +1,14 @@
+/* ------------------------------------------------------
+Author	Katie Liu
+Email   kliu57@myseneca.ca
+ID      018889121
+Date    Tue Mar 01 2022
+
+Workshop 6 part 1
+Module: HealthCard
+Desc:   Module for HealthCard object and functions
+Filename: HealthCard.h
+-----------------------------------------------------------*/
 #ifndef SDDS_HEALTHCARD_H
 #define SDDS_HEALTHCARD_H
 #include <cstring>
@@ -6,13 +17,13 @@
 
 namespace sdds {
    const int MaxNameLength = 55;
-   const int MaxVerLength = 2;
-   const int MaxSCLength = 9;
+   const int VCodeLength = 2;
+   const int SNumberLength = 9;
    class HealthCard {
       char* m_name{};       // name of cardholder - to be dynamically allocated
       long long m_number;   // number of card
-      char m_vCode[MaxVerLength+1];     // version code of card
-      char m_sNumber[MaxSCLength+1];    // stock control number
+      char m_vCode[VCodeLength+1];     // version code of card
+      char m_sNumber[SNumberLength+1];    // stock control number
 
       // Returns true is the four parts of the ID card are valid
       bool validID(const char* name, long long number, const char vCode[] , const char sNumber[]) const;
@@ -93,5 +104,3 @@ namespace sdds {
    std::istream& operator>>(std::istream& istr, HealthCard& hc);
 }
 #endif // !SDDS_HealthCard_H
-
-
