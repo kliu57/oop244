@@ -93,16 +93,14 @@ namespace sdds {
 
 	ostream& Name::printName(ostream& ostr) const {
 		ostr << m_fname;	// print first name
-		if (m_lname != nullptr) {
-			// has last name
-			if (m_mname != nullptr) {
-				// has middle name
-				if (m_isShort) {
-					ostr << ' ' << m_mname[0] << '.';	// print abbreviated middle name
-				} else {
-					ostr << ' ' << m_mname;	// print middle name
-				}
+		if (m_mname != nullptr) {	// has middle name
+			if (m_isShort) {
+				ostr << ' ' << m_mname[0] << '.';	// print abbreviated middle name
+			} else {
+				ostr << ' ' << m_mname;	// print middle name
 			}
+		}
+		if (m_lname != nullptr) {	// has last name
 			ostr << ' ' << m_lname;	// print last name
 		}
 		return ostr;
@@ -182,15 +180,17 @@ namespace sdds {
 					setEmpty();	// if object already has all three parts set to safe empty state
 				}
 			} else {
-				//setEmpty();	// workshop instructions were wrong, do NOT set to safe empty state if cstring contains spaces 
+				setEmpty();	// set to safe empty state if cstring contains spaces
 			}
-		}	// if cstring is null or empty the object does not change
+		} // if cstring is null or empty the object does not change
 		return *this;
 	}
 
 	Name::operator bool() const {
 		return (m_fname != nullptr) ? true : false;
 	}
+
+
 
 	void Name::setShort(bool isShort) {
 		m_isShort = isShort;
