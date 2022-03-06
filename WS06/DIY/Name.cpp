@@ -182,7 +182,7 @@ namespace sdds {
 					setEmpty();	// if object already has all three parts set to safe empty state
 				}
 			} else {
-				setEmpty();	// if cstring contains spaces set to safe empty state
+				//setEmpty();	// workshop instructions were wrong, do NOT set to safe empty state if cstring contains spaces 
 			}
 		}	// if cstring is null or empty the object does not change
 		return *this;
