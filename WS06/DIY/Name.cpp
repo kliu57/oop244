@@ -2,7 +2,7 @@
 Author	Katie Liu
 Email   kliu57@myseneca.ca
 ID      018889121
-Date    Tue Mar 01 2022
+Date    Sun Mar 6 2022
 
 Workshop 6 part 2
 Module: Name
@@ -17,6 +17,21 @@ using namespace std;
 namespace sdds {
 
 	// private member functions
+
+	bool Name::containsSpaces(const char* cstring) const {
+		bool foundSpace = false;
+		int cstringLength = 0;
+		if (cstring != nullptr) {
+			cstringLength = (int)strlen(cstring);
+			for (int i = 0; i < cstringLength && cstring[i] != '\0'; i++) {	// iterate through each character to look for space
+				if (isspace(cstring[i])) {
+					foundSpace = true;	// space character found
+					i = cstringLength;	// quit loop
+				}
+			}
+		}
+		return foundSpace;
+	}
 
 	bool Name::validName(const char* name) const {
 		bool valid = false;
@@ -73,24 +88,6 @@ namespace sdds {
 			if (m_mname!= nullptr) { 
 				strcpy(m_mname, mname);	// copy data to newly allocated memory location
 			}
-		}
-	}
-
-	void Name::extractChar(istream& istr, char ch) const {
-		if (istr.peek() == ch) { // checking if the next character in keyboard is same as ch
-			istr.ignore();					// throw away this character
-		} else {
-			istr.ignore(1000, ch);			// throw away everything after or until ch
-			istr.setstate(ios::failbit);	// Set the istream into a fail state
-		}
-	}
-
-	void Name::extractChar(istream& istr, char chA, char chB) const {
-		if (istr.peek() == chA || istr.peek() == chB) { // checking if the next character in keyboard is same as ch
-			istr.ignore();					// throw away this character
-		} else {
-			istr.ignore(1000, '\n');			// throw away everything after or until newline
-			istr.setstate(ios::failbit);	// Set the istream into a fail state
 		}
 	}
 
@@ -154,26 +151,40 @@ namespace sdds {
 	// copy constructor
 	Name::Name(const Name& nameObject) {
 		if (nameObject) {
-			allocateAndCopyFName(nameObject.m_fname);
-			allocateAndCopyLName(nameObject.m_lname);
-			allocateAndCopyMName(nameObject.m_mname);
+			*this = nameObject;
 		} else {
 			setEmpty();
 		}
 	}
 
+	Name& Name::operator=(const Name& nameObject) {
+		if (this != &nameObject && nameObject) {	// check that addresses are not the same and arg object is valid
+			allocateAndCopyFName(nameObject.m_fname);
+			allocateAndCopyLName(nameObject.m_lname);
+			allocateAndCopyMName(nameObject.m_mname);
+			m_isShort = nameObject.m_isShort;
+		} else {
+			setEmpty();
+		}
+		return *this;
+	}
+
 	Name& Name::operator+=(const char* name) {
 		if (validName(name)) {
-			if (m_fname == nullptr) {
-				allocateAndCopyFName(name);
-			} else if (m_mname == nullptr) {
-				allocateAndCopyMName(name);
-			} else if (m_lname == nullptr) {
-				allocateAndCopyLName(name);
+			if (!containsSpaces(name)) {	// workshop instructions state if there are spaces in the cstring the operation fails
+				if (m_fname == nullptr) {
+					allocateAndCopyFName(name);
+				} else if (m_mname == nullptr) {
+					allocateAndCopyMName(name);
+				} else if (m_lname == nullptr) {
+					allocateAndCopyLName(name);
+				} else {
+					setEmpty();	// if object already has all three parts set to safe empty state
+				}
 			} else {
-				setEmpty();
+				setEmpty();	// if cstring contains spaces set to safe empty state
 			}
-		}
+		}	// if cstring is null or empty the object does not change
 		return *this;
 	}
 
@@ -185,7 +196,6 @@ namespace sdds {
 		m_isShort = isShort;
 	}
 
-	// print to screen or to file
 	ostream& Name::print(ostream& ostr, bool toFile) const {
 		if (*this) {	// check if current object is valid
 			if (toFile) {
@@ -210,7 +220,7 @@ namespace sdds {
 		int thirdWordIndex = 0;
 		char ch = 0;
 		unsigned int i = 0;
-		bool validInput = true;
+		bool validInput = false;
 
 		istr.get(ch);	// read first character
 
@@ -218,20 +228,17 @@ namespace sdds {
 		for (i = 0; i < MAX_INPUT_LENGTH && !isspace(ch); i++) {
 			firstWord[firstWordIndex++] = ch;	// store
 			// read the cString stopping at the size limit
-			if (istr.peek() != ' ' && istr.peek() != '\n') {
-				if (i < MAX_INPUT_LENGTH-1) {
-					istr.get(ch);
-				}
-			} else {
-				i = MAX_INPUT_LENGTH;	// quit loop
+			if (i < MAX_INPUT_LENGTH-1) {
+				istr.get(ch); 
 			}
 		}
 		firstWord[firstWordIndex] = 0; // make sure the cString is null terminated
 
-		extractChar(istr, ch);	// extract space or newline
-
 		if (ch == ' ') {
 			// read second word
+
+			istr.get(ch);	// read character following the space
+
 			for (i = i; i < MAX_INPUT_LENGTH && !isspace(ch); i++) {
 				secondWord[secondWordIndex++] = ch;
 				// read the cString stopping at the size limit
@@ -243,6 +250,9 @@ namespace sdds {
 
 			if (ch == ' ') {
 				// read third word
+				
+				istr.get(ch);	// read character following the space
+
 				for (i = i; i < MAX_INPUT_LENGTH && !isspace(ch); i++) {
 					thirdWord[thirdWordIndex++] = ch;
 					// read the cString stopping at the size limit
@@ -252,43 +262,47 @@ namespace sdds {
 				}
 				thirdWord[thirdWordIndex] = 0; // make sure the cString is null terminated
 
-				if (ch != '\n') {	// a valid input must have newline char following third word
-					validInput = false;
-					cout <<  "input doesnt have newline char following third word (" << ch << ")" <<endl;
+				if (ch == '\n') {
+					// input consists of three words
+					// a valid input must have newline char following third word
+					validInput = true;
 				}
-			} else {
-				// there is no third word
-				if (ch != '\n') {	// a valid input must have newline char following second word
-					validInput = false;
-					cout <<  "input doesnt have newline char following sec word" << endl;
-				}
+			} else if (ch == '\n') {
+				// input consists of two words
+				// a valid input must have newline char following second word
+				validInput = true;
 			}
-		} else {
-			// there is no second word
-			if (ch != '\n') {	// a valid input must have newline char following first word
-				validInput = false;
-				cout <<  "input doesnt have newline char following 1st word" << endl;
-			}
+		} else if (ch == '\n') {
+			// input consists of one word
+			// a valid input must have newline char following first word
+			validInput = true;
 		}
 
 		if (validInput) {
-			if (thirdWord[0] != 0) {
-				set(firstWord, secondWord, thirdWord);
-			} else if (secondWord[0] != 0) {
+			if (thirdWord[0] != 0) {	// third word has stored data
+				set(firstWord, thirdWord, secondWord);
+			} else if (secondWord[0] != 0) {	// second word has stored data
 				set(firstWord, secondWord);
-			} else {
+			} else {	// only first word has stored data
 				set (firstWord);
 			}
-			istr.clear();				// clears state to allow further extraction
 
-			cout << "name read!" << endl;
+			istr.clear();				// clears state to allow further extraction
 		} else {
 			setEmpty();					// set object to empty
 			istr.clear();				// clears state to allow further extraction
-			//istr.ignore(2000, '\n');	// clears the input buffer
 
-			cout << "name not read!" << endl;
+			if(&istr != &cin){				// if istr is not cin assume it is reading from file
+				istr.ignore(2000, '\n');	// clears the input buffer
+			}
 		}
+
+		if(&istr != &cin) {						// if istr is not cin assume it is reading from file
+			if (istr.eof()) {					// check if end of stream reached
+				istr.setstate(ios::failbit);	// Set the istream into a fail state
+			}
+		}
+
 		return istr;
 	}
 
