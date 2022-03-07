@@ -1,0 +1,38 @@
+Workshop 6 part 2
+Katie Liu
+kliu57@myseneca.ca
+018889121
+Sun Mar 6 2022
+
+In this workshop I learned to declare a copy constructor and a copy assignment operator to manage 
+deep copying of resource instance variables. When one of the class member variables is a pointer to an 
+array with an unknown number of elements, we can initialize the member variable to a null pointer and 
+then dynamically allocate memory at runtime. The copy constructor allows us to set the data members 
+of a newly created object to the same values as the data members of an existing object. For example, 
+HealthCard objA = objB. When implementing the copy constructor, we must first deallocate any 
+previously allocated dynamic memory. Each HealthCard object has a data member called m_name 
+which is a pointer to a character array. We must first delete the memory at the address held by m_name 
+of objA, then allocate new memory with a size that is equivalent to the size of the m_name of objB. The 
+data will be copied over to the newly allocated memory location, and the pointer in objA will be set to 
+point at the new memory location. Any non-resource instance variable is just set through shallow 
+copying. The copy assignment operator allows us to set the data members of one existing object to the 
+same values as the data members of another existing object. For example, objA = objB. When 
+implementing the copy assignment operator, we must first check that two objects do not share the 
+same address. Other that that, it does the same thing as the copy constructor. I also learned to use the 
+string object to store input. I worked with input stream objects. I overloaded the extraction operator to 
+read data from the keyboard as well as from a file, validate that data, and then store that data in the 
+member variables of an object. I learned how to use the peek function, how to set the istream object to 
+a fail state, and how to clear the buffer. I overloaded the insertion operator to print data from an object 
+to a file or to the screen.
+
+Issues that caused me difficulty was debugging my code when I did not get an error message in Visual 
+Studios but my output did not match the correct output. This meant that I had to look in the main.cpp 
+file to find out exactly what the tester file was doing. When I read the workshop instructions, I assumed 
+that when we had a first name and middle name, that we were only supposed to print out the first 
+name. However when I took a look at the tester file, it was at one point adding a middle name and then 
+the newly added middle name was showing in the output file. Because some of the instructions were 
+slightly vague, I gained a lot of practice reading through the code in the main.cpp file. Another bug I 
+solved was I forgot to check to see if I reached the end of the file, which caused an infinite loop to occur. 
+I fixed the bug by setting the state of the input stream object to a fail state when we reached the end of 
+the file. Lastly, I had to be very careful when clearing the buffer. At certain points of the code in 
+main.cpp, it was clearing the buffer, and if I do it again in my code that would cause trouble. 
