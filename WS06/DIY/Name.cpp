@@ -11,6 +11,7 @@ Filename: Name.cpp
 -----------------------------------------------------------*/
 #define  _CRT_SECURE_NO_WARNINGS
 #include <cstring>
+#include <string>
 #include "Name.h"
 using namespace std;
 
@@ -212,92 +213,71 @@ namespace sdds {
 	}
 
 	istream& Name::read(istream& istr) {
-		char firstWord[MAX_INPUT_LENGTH+1] = {0};
-		char secondWord[MAX_INPUT_LENGTH+1] = {0};
-		char thirdWord[MAX_INPUT_LENGTH+1] = {0};
-		int firstWordIndex = 0;
-		int secondWordIndex = 0;
-		int thirdWordIndex = 0;
-		char ch = 0;
-		unsigned int i = 0;
+		std::string firstWord;
+		std::string secondWord;
+		std::string thirdWord;
 		bool validInput = false;
 
-		istr.get(ch);	// read first character
+		if (!isspace(istr.peek())) {
+			// read first word
+			istr >> firstWord;
 
-		// read first word
-		for (i = 0; i < MAX_INPUT_LENGTH && !isspace(ch); i++) {
-			firstWord[firstWordIndex++] = ch;	// store
-			// read the cString stopping at the size limit
-			if (i < MAX_INPUT_LENGTH-1) {
-				istr.get(ch); 
-			}
-		}
-		firstWord[firstWordIndex] = 0; // make sure the cString is null terminated
+			if (istr.peek() == ' ') {
+				istr.ignore();	// throw away this character
 
-		if (ch == ' ') {
-			// read second word
+				if (!isspace(istr.peek())) {
+					// read second word
+					istr >> secondWord;
 
-			istr.get(ch);	// read character following the space
+					if (istr.peek() == ' ') {
+						istr.ignore();	// throw away this character
 
-			for (i = i; i < MAX_INPUT_LENGTH && !isspace(ch); i++) {
-				secondWord[secondWordIndex++] = ch;
-				// read the cString stopping at the size limit
-				if (i < MAX_INPUT_LENGTH-1) {
-					istr.get(ch); 
-				}
-			}
-			secondWord[secondWordIndex] = 0; // make sure the cString is null terminated
+						if (!isspace(istr.peek())) {
+							// read third word
+							istr >> thirdWord;
 
-			if (ch == ' ') {
-				// read third word
-				
-				istr.get(ch);	// read character following the space
-
-				for (i = i; i < MAX_INPUT_LENGTH && !isspace(ch); i++) {
-					thirdWord[thirdWordIndex++] = ch;
-					// read the cString stopping at the size limit
-					if (i < MAX_INPUT_LENGTH-1) {
-						istr.get(ch); 
+							if (istr.peek() == '\n') {	// three words followed by newline - VALID
+								validInput = true;
+								istr.clear();
+								istr.ignore();
+							}
+						} else {
+							istr.clear();
+							if (&istr != &cin) istr.ignore(1000, '\n');
+						}
+					} else if (istr.peek() == '\n') {	// two words followed by newline - VALID
+						validInput = true;
+						istr.clear();
+						istr.ignore();
 					}
+				} else {
+					istr.clear();
+					if (&istr != &cin) istr.ignore(1000, '\n');
 				}
-				thirdWord[thirdWordIndex] = 0; // make sure the cString is null terminated
-
-				if (ch == '\n') {
-					// input consists of three words
-					// a valid input must have newline char following third word
-					validInput = true;
-				}
-			} else if (ch == '\n') {
-				// input consists of two words
-				// a valid input must have newline char following second word
+			} else if (istr.peek() == '\n') {	// one words followed by newline - VALID
 				validInput = true;
+				istr.clear();
+				istr.ignore();
 			}
-		} else if (ch == '\n') {
-			// input consists of one word
-			// a valid input must have newline char following first word
-			validInput = true;
+		} else {
+			istr.clear();
+			if (&istr != &cin) istr.ignore(1000, '\n');
 		}
 
 		if (validInput) {
-			if (thirdWord[0] != 0) {	// third word has stored data
-				set(firstWord, thirdWord, secondWord);
-			} else if (secondWord[0] != 0) {	// second word has stored data
-				set(firstWord, secondWord);
+			if (!thirdWord.empty()) {	// third word has stored data
+				set(firstWord.c_str(), thirdWord.c_str(), secondWord.c_str());
+			} else if (!secondWord.empty()) {	// second word has stored data
+				set(firstWord.c_str(), secondWord.c_str());
 			} else {	// only first word has stored data
-				set (firstWord);
+				set (firstWord.c_str());
 			}
-
 			istr.clear();				// clears state to allow further extraction
 		} else {
 			setEmpty();					// set object to empty
-			istr.clear();				// clears state to allow further extraction
-
-			if(&istr != &cin){				// if istr is not cin assume it is reading from file
-				istr.ignore(2000, '\n');	// clears the input buffer
-			}
 		}
 
-		if(&istr != &cin) {						// if istr is not cin assume it is reading from file
+		if (&istr != &cin) {					// if istr is not cin assume it is reading from file
 			if (istr.eof()) {					// check if end of stream reached
 				istr.setstate(ios::failbit);	// Set the istream into a fail state
 			}
