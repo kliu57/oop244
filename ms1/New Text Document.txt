@@ -1,0 +1,24 @@
+things to prepare and ship
+
+non-perishable
+	called items
+	no expiry
+	blankets, tents
+perishable
+	has expiry date
+	called perishables
+	food, medicine
+
+create classes:
+	Item
+	Perishable
+
+bottom top design
+sys analyst has set out what we need
+programmers get building blocks (milestones)
+
+MS5 has 6 submissions (each has 10%)
+
+your app will be a menu of a bunch of diff things to do
+as we add functionality each one becomes active
+
