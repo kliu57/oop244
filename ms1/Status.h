@@ -11,12 +11,8 @@ that my professor provided to complete my workshops and assignments.
 -----------------------------------------------------------*/
 #ifndef SDDS_STATUS_H
 #define SDDS_STATUS_H
-
 #include <iostream>
-#include <istream>
-
 namespace sdds {
-
     class Status {
         char* m_desc{};
         int m_code;

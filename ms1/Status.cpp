@@ -83,7 +83,7 @@ namespace sdds {
 	}
 
 	ostream& Status::print(ostream& ostr) const {
-		if ((bool)*this == false) {	// only print if current object is invalid
+		if (!*this) {	// only print if current object is invalid
 			if (m_code != 0) {	// only print error code if not zero
 				ostr << "ERR#" << m_code << ": ";
 			}
