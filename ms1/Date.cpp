@@ -60,8 +60,6 @@ namespace sdds {
 		Utils ut;
 		ut.testMode(true);
 		ut.getSystemDate(&m_year, &m_month, &m_day);	// set member variables to current date
-
-		cout << "a new date obj init to: " << m_day << endl;
 		m_isFormatted = true;
 	}
 
