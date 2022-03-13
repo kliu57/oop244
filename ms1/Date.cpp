@@ -23,7 +23,6 @@ namespace sdds {
 		int currentYear = 0;
 		int currentMonth = 0;
 		int currentDay = 0;
-		Utils ut;
 		ut.testMode(true);
 		ut.getSystemDate(&currentYear, &currentMonth, &currentDay);	// get current date
 		if (m_year >= currentYear && m_year <= MAX_YEAR_VALUE) {	// check if year is valid
@@ -57,7 +56,6 @@ namespace sdds {
 	// public member functions
 
 	Date::Date() {
-		Utils ut;
 		ut.testMode(true);
 		ut.getSystemDate(&m_year, &m_month, &m_day);	// set member variables to current date
 		m_isFormatted = true;
@@ -141,7 +139,7 @@ namespace sdds {
 		int currentYear = 0;
 		int currentMonth = 0;
 		int currentDay = 0;
-		Utils ut;
+		
 		ut.testMode(true);
 		cin >> num;    // read from user input, input stream object will be set to fail state if user input is not an integer
 		if (!cin.fail()) {	// check if an integer was read successfully

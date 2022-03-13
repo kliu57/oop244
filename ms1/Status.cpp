@@ -19,7 +19,6 @@ namespace sdds {
 	// public member functions
 
 	Status::Status(const char* desc) {
-		Utils ut;
 		ut.alocpy(m_desc, desc);	// safely alloc dynamic memory - copy desc of argument object to m_desc
 		m_code = 0;
 	}
@@ -34,7 +33,7 @@ namespace sdds {
 	}
 
 	Status& Status::operator=(const Status& statusObject) {
-		Utils ut;
+		
 		if (this != &statusObject) {	// check that addresses are not the same
 			ut.alocpy(m_desc, statusObject.m_desc);		// safely alloc dynamic memory - copy desc of argument object to m_desc
 			m_code = statusObject.m_code;				// shallow copy of code of argument object to m_code
@@ -45,7 +44,6 @@ namespace sdds {
 	}
 
 	Status& Status::operator=(const char* desc) {
-		Utils ut;
 		if (desc != nullptr) {
 			if (&m_desc != &desc) {	// check that addresses are not the same and arg object is valid
 				ut.alocpy(m_desc, desc);		// safely alloc dynamic memory - copy desc of argument object to m_desc
