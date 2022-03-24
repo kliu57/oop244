@@ -31,7 +31,7 @@ namespace sdds {
 		cout << "Date: ";
 		currentDate.write(cout) << endl;	// print formatted date
 
-		cout << "Data file:  " << (m_filename != nullptr ? m_filename : "No file") << endl;
+		cout << "Data file: " << (m_filename != nullptr ? m_filename : "No file") << endl;
 		cout << "---------------------------------" << endl;
 
 		return m_mainMenu.run();	// run main menu
