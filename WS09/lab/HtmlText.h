@@ -16,7 +16,7 @@ that my professor provided to complete my workshops and assignments.
 
 namespace sdds {
     class HtmlText : public Text {
-        char* m_title=nullptr;      // title of the Html conversion dynamically;
+        char* m_title = nullptr;      // title of the Html conversion dynamically;
 
         // Sets the Text object to a recognizable empty (invalid) state by releasing memory and setting m_content to nullptr
         void setEmpty();

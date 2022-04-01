@@ -90,33 +90,15 @@ namespace sdds {
 
 	istream& Text::read(istream& istr) {
 		int fileSize = 0;
-		int i = 0;
-		char ch = 0;
 
 		setEmpty();		// deallocates the content in this object
 
-		//if (istr.peek() != '\0') {
-		//	fileSize = getFileLength(istr);
+		fileSize = getFileLength(istr);	// get size of stream
 
-		//	m_content =  new (nothrow) char[fileSize+1];	// allocate new memory storage
-
-		//	if (m_content!= nullptr) { 
-		//		for (i = 0; i < fileSize && istr.peek() != '\0'; i++) {
-		//			istr.get(ch);		// store one character
-		//			m_content[i] = ch;
-		//		}
-
-		//		m_content[i] = '\0'; // make sure the cString is null terminated
-
-		//		istr.clear();	// clear the istream
-		//	} else {
-		//		cout << "Unexpected error in Text.cpp read" << endl;
-		//	}
-		//}
-
-		fileSize = getFileLength(istr);
 		m_content =  new (nothrow) char[fileSize+1];	// allocate new memory storage
-		istr.get(m_content, fileSize+1, '\0');
+
+		istr.get(m_content, (fileSize+1), '\0');	// store stream into m_content
+
 		if (!istr.fail()) istr.clear();	// clear the istream
 
 		return istr;

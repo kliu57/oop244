@@ -17,7 +17,7 @@ that my professor provided to complete my workshops and assignments.
 
 namespace sdds {
     class Text {
-        char* m_content=nullptr;    // holds content of the text file dynamically
+        char* m_content = nullptr;    // holds content of the text file dynamically
 
         // Sets the Text object to a recognizable empty (invalid) state by releasing memory and setting m_content to nullptr
         void setEmpty();
@@ -37,7 +37,7 @@ namespace sdds {
         const char* getContent() const;
 
         // Sets m_content
-        void setContent(const char* conten);
+        void setContent(const char* content);
 
         // constructor
         Text();
