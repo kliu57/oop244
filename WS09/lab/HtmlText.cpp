@@ -11,8 +11,6 @@ that my professor provided to complete my workshops and assignments.
 -----------------------------------------------------------*/
 #define  _CRT_SECURE_NO_WARNINGS
 #include <cstring>
-#include <string>
-#include <fstream>
 #include "HtmlText.h"
 using namespace std;
 
@@ -111,7 +109,7 @@ namespace sdds {
 			lastCh = ch;
 		}
 
-		ostr << "</body>\n</html>" << endl;
+		ostr << "</body>\n</html>";
 
 		return ostr;
 	}
