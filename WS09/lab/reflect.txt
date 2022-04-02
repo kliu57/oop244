@@ -1,0 +1,26 @@
+Workshop 9 part 2
+Katie Liu
+kliu57@myseneca.ca
+018889121
+Sat Apr 2 2022
+
+In this workshop I learned to use derived classes and virtual functions. I learned to read from an istream 
+object and store the data dynamically, and write to an ostream object. I implemented a base class, Text, 
+and a derived class, HtmlText. In the base class I declared a public member function called write which I 
+made virtual. Because I have this virtual function I was able to demonstrate dynamic dispatch. In the 
+derived class I declared another write function which shadows the base class member function. When 
+the main program runs the line of code (ofstream("dcwrLittle.html")<<H), this calls on the overloaded 
+extraction operation function which calls on the write function. Since the write function is virtual, the 
+compiler overrides the early binding of the write function and the compiler will call the most derived 
+version of the write function for the argument passed into it. The argument passed in was H which is an 
+HtmlText object, so the compiler uses the HtmlText implementation of the write function. I also learned 
+how to get the length of an istream object by looking at the getFileLength function that was provided by 
+the workshop.
+
+Issues that caused me difficulty was I forgot to add the virtual keyword during my first pass of testing my 
+program and I could not get the write function of the derived class to be called. I quickly realized my 
+mistake after. While implementing my read function, when I tried to use the get function to get one 
+character at a time from istream, I always ended up getting some extra garbage characters at the end. 
+Eventually I settled for calling the get function just one time for the entire text instead of character by 
+character, and inputting the null byte as a delimiter so that it will not continue to "get" any more data 
+when it reaches the end.
