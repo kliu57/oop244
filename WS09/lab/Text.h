@@ -13,7 +13,6 @@ that my professor provided to complete my workshops and assignments.
 #define SDDS_TEXT_H
 
 #include <iostream>
-#include <istream>
 
 namespace sdds {
     class Text {
