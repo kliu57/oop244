@@ -51,19 +51,16 @@ namespace sdds {
 		setEmpty();
 	}
 
-	HtmlText::HtmlText(const HtmlText& htObject) : Text() {
-		HtmlText::allocateAndCopy(htObject.m_title);	// copies title even if null
-
-		// set text object content to argument
-		Text::setContent(htObject.getContent());
+	HtmlText::HtmlText(const HtmlText& htObject) : Text(htObject) {
+		*this = htObject;
 	}
 
 	HtmlText& HtmlText::operator=(const HtmlText& htObject) {
-		if (this != &htObject) {	// check that addresses are not the same
-			HtmlText::allocateAndCopy(htObject.m_title);
 
-			// set text object content to argument
-			Text::setContent(htObject.getContent());
+		Text::operator=(htObject);	// calls base class assignment operator
+
+		if (this != &htObject) {	// check that addresses are not the same
+			HtmlText::allocateAndCopy(htObject.m_title);	// copies title even if null
 		} else {
 			setEmpty();
 		}
@@ -81,7 +78,7 @@ namespace sdds {
 		}
 		
 		// go character by character and either replace and print or print
-		for (int i = 0; i < (int)strlen(Text::getContent()); i++) {
+		for (int i = 0; Text::operator[](i) != '\0'; i++) {
 			ch = Text::operator[](i);
 
 			// check for things to be replaced before print

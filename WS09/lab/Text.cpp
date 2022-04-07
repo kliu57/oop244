@@ -42,14 +42,6 @@ namespace sdds {
 		}
 	}
 
-	const char* Text::getContent() const {
-		return m_content;
-	}
-
-	void Text::setContent(const char* content) {
-		allocateAndCopy(content);
-	}
-
 	Text::Text() {
 		m_content = nullptr;
 	}
@@ -63,11 +55,7 @@ namespace sdds {
 	}
 
 	Text::Text(const Text& textObject) {
-		if (textObject) {
-			allocateAndCopy(textObject.m_content);
-		} else {
-			setEmpty();
-		}
+		*this = textObject;
 	}
 
 	Text& Text::operator=(const Text& textObject) {

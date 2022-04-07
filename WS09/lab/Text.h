@@ -32,12 +32,6 @@ namespace sdds {
         // Copy the Cstring pointed by content into the newly allocated memory pointed by m_content
         void allocateAndCopy(const char* content);
 
-        // Returns m_content
-        const char* getContent() const;
-
-        // Sets m_content
-        void setContent(const char* content);
-
         // constructor
         Text();
 
