@@ -199,8 +199,6 @@ namespace sdds {
         int i=0;
         bool hitDelim = false;
 
-        int newSize = 0;
-
         ifstr.get(ch); 
         if (ch == delim) {
             hitDelim = true;
