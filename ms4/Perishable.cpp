@@ -83,8 +83,8 @@ namespace sdds {
         Item::load(ifstr);      
 
         // check for errors after base class load
-        if (!Item::m_state) {
-            error = true;
+        if (!error) {
+            if (!Item::m_state) error = true;
         }
 
         // 1. check tab
@@ -102,11 +102,8 @@ namespace sdds {
         }
      
         // 2. check for errors after read
-
         if (!error) {
-            if (ifstr.fail() || ifstr.eof()) {
-                error = true;
-            }
+            if (ifstr.fail() || ifstr.eof()) error = true;
         }
 
         // 2. after tab ignore check for eof or newline
@@ -122,13 +119,9 @@ namespace sdds {
             ifstr >> expDateNum;
         }
 
-
-
         // 3. check for errors after read
         if (!error) {
-            if (ifstr.fail() || ifstr.eof()) {
-                error = true;
-            }
+            if (ifstr.fail() || ifstr.eof()) error = true;
         }
         if (!error) {
             if (expDateNum < 100000 || expDateNum > 999999) error = true;
@@ -138,11 +131,9 @@ namespace sdds {
         if (!error) {
             m_expiryDate = Date(expDateNum);
         }
-        if (!m_expiryDate) {
-            error = true;
+        if (!error) {
+            if (!m_expiryDate) error = true;
         }
-
-
 
         // 4. check that ends with a newline character, ignore newline character
         if (!error) {

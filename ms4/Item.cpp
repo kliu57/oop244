@@ -142,16 +142,14 @@ namespace sdds {
 		bool validInput = false;
         bool error = false;
 
-
         setEmpty(); // set object to empty state
 
         // if stream already ended or starts with a newline then error out
-        if (ifstr.eof()) {
-            error = true;
-        } else {
-            if (ifstr.peek() == '\n') {
-                error = true;
-            }
+        if (!error) {
+            if (ifstr.eof()) error = true;
+        }
+        if (!error) {
+            if (ifstr.peek() == '\n') error = true;
         }
 
 		// 1. read first thing which should be sku
@@ -190,13 +188,11 @@ namespace sdds {
         }
 
         // 2. check for errors after read
-        if (m_desc == nullptr) {
-            error = true;
+        if (!error) {
+            if (ifstr.fail() || ifstr.eof()) error = true;
         }
         if (!error) {
-            if (ifstr.fail() || ifstr.eof()) {
-                error = true;
-            }
+            if (m_desc == nullptr) error = true;
         }
 
         // 2. after tab ignore check for eof or newline
@@ -267,7 +263,6 @@ namespace sdds {
             if (ifstr.peek() == '\n') error = true;
         }
 
-
         // 5. read fifth thing which should be price
         if (!error) {
             ifstr >> m_price;
@@ -307,7 +302,6 @@ namespace sdds {
             if (ifstr.peek() != '\n') ifstr.ignore(1000, '\n');
 
             m_state = "Input file stream read failed!"; // set state to bad
-
 		}
 
 		return ifstr;

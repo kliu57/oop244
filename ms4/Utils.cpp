@@ -246,6 +246,11 @@ namespace sdds {
             
             aloConcat(dest, fixedSizeString);    // concat and set as final
         }
+
+        // if reached the end and delimiter not found, set stream to fail state
+        if (!hitDelim) {
+            ifstr.setstate(ios::failbit);
+        }
     }
 
     void Utils::getcstring(char*& dest, istream& istr) {
