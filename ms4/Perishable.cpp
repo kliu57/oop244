@@ -79,9 +79,6 @@ namespace sdds {
     ifstream& Perishable::load(ifstream& ifstr) {
         bool validInput = false;
         bool error = false;
-        int year = 0;
-        int month = 0;
-        int day = 0;
         int expDateNum = 0;
 
         // call base class load
