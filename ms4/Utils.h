@@ -27,6 +27,9 @@ namespace sdds {
         // Safely allocates memory in destination and copies the source into it
         void alocpy(char*& destination, const char* source);
 
+        // Safely allocates memory in destination and concatenates two cstrings
+        void aloConcat(char*& destination, const char* source);
+
         // Continue to prompt the user to enter an integer until a valid one is read
         // Returns the read integer
         int getint(const char* prompt = nullptr, std::istream& istr = std::cin);
@@ -41,10 +44,6 @@ namespace sdds {
 
         // Returns true if a cstring exists in another cstring, false otherwise
         bool findInCstring(const char* cstring, const char* toFind);
-
-        // Get length of ifstream
-        // Code logic learned from Workshop 9
-        int getFileLength(std::ifstream& ifstr);
 
         // Read a cstring until delimiter reached
         void getFileCstring(char*& dest, std::ifstream& ifstr, char delim = '\n');

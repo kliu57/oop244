@@ -54,6 +54,26 @@ namespace sdds {
         }
     }
 
+    void Utils::aloConcat(char*& destination, const char* source) {
+        int newSize = 0;
+        char* newDest = nullptr;
+
+        if (destination != nullptr) {
+            newSize = strlen(destination)+strlen(source);
+            newDest = new (nothrow) char[newSize+1];  // allocate new memory storage
+            if (newDest != nullptr) {
+                strcpy(newDest, destination);	// copy data to newly allocated memory location
+                strcat(newDest, source);        // concatenate
+                newDest[newSize] = '\0';
+
+                delete [] destination;
+                destination = newDest;  // set pointer to point at new location
+            } else {
+                cout << "Unexpected error" << endl;
+            }
+        }
+    }
+
     int Utils::getint(const char* prompt, istream& istr) {
         int input = 0;
         if (prompt != nullptr) {
@@ -162,17 +182,6 @@ namespace sdds {
         return input;
     }
 
-    int Utils::getFileLength(ifstream & ifstr) {
-        int len = 0;
-        if (ifstr) {
-            streampos cur = ifstr.tellg();  // save current read position
-            ifstr.seekg(0, ios::end);   // go to end
-            len = (int)ifstr.tellg();   // get difference in positions
-            ifstr.seekg(cur);   // return to the saved read position
-        }
-        return len;
-    }
-
     bool Utils::findInCstring(const char* cstring, const char* toFind) {
         bool found = false;
         const char* chPtr = strstr(cstring, toFind);
@@ -183,9 +192,62 @@ namespace sdds {
     }
 
     void Utils::getFileCstring(char*& dest, ifstream& ifstr, char delim) {
-        char temp[1000];
-        ifstr.getline(temp, 1000, delim);    //this already throws away the delim
-        ut.alocpy(dest, temp);
+        const int maxSize = 200;        // this is how many characters we will attempt to read from the file before stopping
+                                        // if delimiter is not reached, we will dynamically allocate memory and read further
+        char fixedSizeString[maxSize];
+        char ch=0;
+        int i=0;
+        bool hitDelim = false;
+
+        int newSize = 0;
+
+        ifstr.get(ch); 
+        if (ch == delim) {
+            hitDelim = true;
+        }
+
+        // read char by char until hitting delim or maxSize
+        for (i = 0; i < maxSize-1 && !ifstr.eof() && !hitDelim; i++) {
+            fixedSizeString[i] = ch;
+
+            // read the cString stopping at the size limit
+            if (i < maxSize-2) {
+                ifstr.get(ch); 
+
+                if (ch == delim) {
+                    hitDelim = true;
+                }
+            }
+        }   
+        fixedSizeString[i] = '\0'; // make sure the cString is null terminated
+
+        ut.alocpy(dest, fixedSizeString);    // set string as final
+
+        // continue reading if still havent hit delimiter
+        while (!hitDelim && !ifstr.eof()) {
+
+            hitDelim = false;
+            ifstr.get(ch); 
+            if (ch == delim) {
+                hitDelim = true;
+            }
+            // read char by char until hitting delim or maxSize
+            for (i = 0; i < maxSize-1 && !ifstr.eof() && !hitDelim; i++) {
+                fixedSizeString[i] = ch;
+
+                // read the cString stopping at the size limit
+                if (i < maxSize-2) {
+                    ifstr.get(ch); 
+
+                    if (ch == delim) {
+                        hitDelim = true;
+                    }
+                }
+            }   
+            fixedSizeString[i] = '\0'; // make sure the fixedSizeString is null terminated
+            
+            aloConcat(dest, fixedSizeString);    // concat and set as final
+        }
     }
 
     void Utils::getcstring(char*& dest, istream& istr) {
