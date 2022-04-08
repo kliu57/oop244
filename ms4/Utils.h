@@ -47,7 +47,7 @@ namespace sdds {
         int getFileLength(std::ifstream& ifstr);
 
         // Read a cstring until delimiter reached
-        void getcstring(char*& dest, std::ifstream& ifstr, char delim = '\n');
+        void getFileCstring(char*& dest, std::ifstream& ifstr, char delim = '\n');
 
         // Read a cstring from console
         void getcstring(char*& dest, std::istream& istr = std::cin);

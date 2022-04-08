@@ -182,35 +182,10 @@ namespace sdds {
         return found;
     }
 
-    void Utils::getcstring(char*& dest, ifstream& ifstr, char delim) {
-        int fileSize = 0;
-        char* tempCstring = nullptr;
-
-        delete [] dest;     // dealloc old memory
-        dest = nullptr;
-
-        fileSize = ut.getFileLength(ifstr);           // get length of stream
-
-        if (fileSize) {
-            tempCstring = new (nothrow) char[fileSize+1];	// allocate temp memory storage
-
-            if (tempCstring != nullptr) {
-                ifstr.get(tempCstring, (fileSize+1), delim);
-
-                dest = new (nothrow) char[fileSize+1];	// allocate new memory storage
-
-                if (dest != nullptr) {
-                    strcpy(dest, tempCstring);      // copy string to new memory location
-                } else {
-                    cout << "Unexpected error in getcstring Code#B" << endl;
-                }
-
-            } else {
-                cout << "Unexpected error in getcstring Code#A" << endl;
-            }
-
-            delete [] tempCstring;  // dealloc temp memory storage
-        }
+    void Utils::getFileCstring(char*& dest, ifstream& ifstr, char delim) {
+        char temp[1000];
+        ifstr.getline(temp, 1000, delim);    //this already throws away the delim
+        ut.alocpy(dest, temp);
     }
 
     void Utils::getcstring(char*& dest, istream& istr) {
@@ -223,7 +198,6 @@ namespace sdds {
         } else {
             delete [] dest;
             dest = nullptr;
-
         }
     }
 }

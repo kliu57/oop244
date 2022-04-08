@@ -63,7 +63,6 @@ namespace sdds {
     }
 
     ofstream& Perishable::save(ofstream& ofstr) const {
-        //cout << "save start" << endl;
         Date expDate = m_expiryDate;
         if (Item::m_state) {    // only proceed if state is good
             expDate = expDate.formatted(false);
@@ -72,7 +71,6 @@ namespace sdds {
             ofstr << expDate;
         }
 
-        //cout << "save end" << endl;
         return ofstr;
     }
 
@@ -90,33 +88,24 @@ namespace sdds {
         }
 
         // 1. check tab
-
-        if (ifstr.peek() == '\t') {
-            ifstr.ignore();
-        } else {
-            error = true;
+        if (!error) {
+            if (ifstr.peek() == '\t') {
+                ifstr.ignore();
+            } else {
+                error = true;
+            }
         }
 
         // 2. read next thing which should be instructions
         if (!error) {
-            ut.getcstring(m_instr, ifstr, '\t');
+            ut.getFileCstring(m_instr, ifstr, '\t');    //this already throws away the tab
         }
-
+     
         // 2. check for errors after read
 
         if (!error) {
             if (ifstr.fail() || ifstr.eof()) {
                 error = true;
-
-            }
-        }
-
-        // 2. ignore tab
-        if (!error) {
-            if (ifstr.peek() != '\t') {
-                error = true;
-            } else {
-                ifstr.ignore();	// throw away tab
             }
         }
 
@@ -132,6 +121,8 @@ namespace sdds {
         if (!error) {
             ifstr >> expDateNum;
         }
+
+
 
         // 3. check for errors after read
         if (!error) {
@@ -150,6 +141,8 @@ namespace sdds {
         if (!m_expiryDate) {
             error = true;
         }
+
+
 
         // 4. check that ends with a newline character, ignore newline character
         if (!error) {
