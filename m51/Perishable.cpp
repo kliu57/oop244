@@ -44,13 +44,7 @@ namespace sdds {
         Item::operator=(perishableObject);	                // calls base class assignment operator
 
         if (this != &perishableObject) {	// check that addresses are not the same and perishableObject is valid
-            if (perishableObject.m_instr != nullptr) {
-                if (static_cast<int>(strlen(perishableObject.m_instr))) {
-                    ut.alocpy(m_instr, perishableObject.m_instr);       // copy instr safely dynamically
-                }
-            } else {
-                setEmpty();
-            }
+            ut.alocpy(m_instr, perishableObject.m_instr);       // copy instr safely dynamically
             m_expiryDate = perishableObject.m_expiryDate;       // copy Date object
         } else {
             setEmpty();
@@ -172,12 +166,7 @@ namespace sdds {
 
                 // print asterix if perishable has instructions
                 if (m_instr != nullptr) {
-                    if (static_cast<int>(strlen(m_instr))) {
-                        ostr << '*';
-                    }
-                    else {
-                        ostr << ' ';
-                    }
+                    ostr << '*';
                 } else {
                     ostr << ' ';
                 }
@@ -190,9 +179,7 @@ namespace sdds {
                 Item::display(ostr);    // call base class display
                 ostr << "Expiry date: " << expDate;
                 if (m_instr != nullptr) {
-                    if (static_cast<int>(strlen(m_instr))) {
-                        ostr << "\nHandling Instructions: " << m_instr;
-                    }
+                    ostr << "\nHandling Instructions: " << m_instr;
                 }
                 ostr << endl;
             }

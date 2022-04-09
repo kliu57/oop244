@@ -42,34 +42,58 @@ namespace sdds {
     }
 
     void Utils::alocpy(char*& destination, const char* source) {
+        int sourceSize = 0;
+        int newDestSize = 0;
         delete [] destination;   // release destination memory storage if any
         destination = nullptr;
         if (source != nullptr) {
-            destination = new (nothrow) char[static_cast<int>(strlen(source)+1)];  // allocate new memory storage
-            if (destination != nullptr) {
-                strcpy(destination, source);	// copy data to newly allocated memory location
-            } else {
-                cout << "Unexpected error in alocpy" << endl;
+            sourceSize = static_cast<int>(strlen(source));
+            // only proceed to copy if source has content
+            if (sourceSize) {
+                newDestSize = sourceSize+1;
+                destination = new (nothrow) char[newDestSize];  // allocate new memory storage
+                if (destination != nullptr) {
+                    strcpy(destination, source);	// copy data to newly allocated memory location
+                } else {
+                    cout << "Unexpected error in alocpy" << endl;
+                }
             }
         }
     }
 
     void Utils::aloConcat(char*& destination, const char* source) {
-        int newSize = 0;
         char* newDest = nullptr;
+        int destSize = 0;
+        int newDestSize = 0;
+        int sourceSize = 0;
 
         if (destination != nullptr) {
-            newSize = static_cast<int>(strlen(destination) + strlen(source) + 1);
-            newDest = new (nothrow) char[newSize];  // allocate new memory storage
-            if (newDest != nullptr) {
-                strcpy(newDest, destination);	// copy data to newly allocated memory location
-                strcat(newDest, source);        // concatenate
-                newDest[newSize-1] = '\0';
-                ut.alocpy(destination, newDest);    // copy concatenated data to destination
+            destSize = static_cast<int>(strlen(destination));
+
+            if (destSize) {
+                if (source != nullptr) {
+                    sourceSize = static_cast<int>(strlen(source));
+
+                    // only proceed if source has content
+                    if (sourceSize) {
+                        newDestSize = destSize + sourceSize + 1;
+                        newDest = new (nothrow) char[newDestSize];  // allocate new memory storage
+                        if (newDest != nullptr) {
+                            strcpy(newDest, destination);	// copy data to newly allocated memory location
+                            strcat(newDest, source);        // concatenate
+                            newDest[newDestSize-1] = '\0';
+
+                            delete [] destination;
+                            destination = newDest;  // set destination to point to new mem location
+                        } else {
+                            cout << "Unexpected error" << endl;
+                        }
+                    }
+                }
             } else {
-                cout << "Unexpected error" << endl;
+                // destination is empty string so just directly copy
+                ut.alocpy(destination, source);
             }
-            delete [] newDest;  // dealloc temp memory
         }
     }
 
@@ -194,8 +218,8 @@ namespace sdds {
         const int maxSize = 200;        // this is how many characters we will attempt to read from the file before stopping
                                         // if delimiter is not reached, we will dynamically allocate memory and read further
         char fixedSizeString[maxSize];
-        char ch=0;
-        int i=0;
+        char ch = 0;
+        int i = 0;
         bool hitDelim = false;
 
         ifstr.get(ch); 
@@ -255,51 +279,59 @@ namespace sdds {
     void Utils::formatCstring(char*& cstring) {
         int i = 0;
         int consecutiveSpaces = 0;
-        int size = static_cast<int>(strlen(cstring) + 1);
+        int size = 0;
         char ch = 0;
-        char* formatted = new (nothrow) char[size];  // dynamically make a copy of the cstring to store the formatted version
+        char* formatted = nullptr;
         int formattedIndex = 0;
 
-        if (formatted != nullptr) {
+        if (cstring != nullptr) {
+            size = static_cast<int>(strlen(cstring) + 1);
 
-            formatted[0] = '\0';
+            if (size) {
+                formatted = new (nothrow) char[size];  // dynamically make a copy of the cstring to store the formatted version
 
-            // skip leading whitespace
-            for (i = 0; i < size-1 && isspace(cstring[i]); i++) {
-            }
-            // now i is the index of the first nonspace character
+                if (formatted != nullptr) {
+                    // skip leading whitespace
+                    for (i = 0; i < size-1 && isspace(cstring[i]); i++) {
+                    }
+                    // now i is the index of the first nonspace character
 
-            // go through the rest of the characters and add them to formatted, changing tabs and newlines to spaces
-            for (i = i; i < size-1; i++) {
-                ch = cstring[i];
+                    // go through the rest of the characters and add them to formatted, changing tabs and newlines to spaces
+                    for (i = i; i < size-1; i++) {
+                        ch = cstring[i];
 
-                if (isspace(ch)) {
-                    formatted[formattedIndex++] = ' ';
-                    consecutiveSpaces++;
-                } else {
-                    formatted[formattedIndex++] = ch;
-                    consecutiveSpaces = 0;
+                        if (isspace(ch)) {
+                            formatted[formattedIndex++] = ' ';
+                            consecutiveSpaces++;
+                        } else {
+                            formatted[formattedIndex++] = ch;
+                            consecutiveSpaces = 0;
+                        }
+                    }
+
+                    // if there are consectutive spaces at the end, remove them
+                    if (consecutiveSpaces) {
+                        formatted[size - consecutiveSpaces - 1] = '\0';
+                    } else {
+                        formatted[i] = '\0';
+                    }
+
+                    if (static_cast<int>(strlen(formatted))) {
+                        // safely copy string
+                        ut.alocpy(cstring, formatted);
+                    } else {
+                        // formatted string is empty so dealloc and set string to nullptr
+                        delete [] cstring;
+                        cstring = nullptr;
+                    }
                 }
-            }
-
-            // if there are consectutive spaces at the end, remove them
-            if (consecutiveSpaces) {
-                formatted[size - consecutiveSpaces - 1] = '\0';
             } else {
-                formatted[i] = '\0';
-            }
-
-            if (static_cast<int>(strlen(formatted))) {
-                // safely copy string
-                ut.alocpy(cstring, formatted);
-            } else {
-                // formatted string is empty so dealloc and set string to nullptr
+                // string is already empty string from the start, dealloc and set to nullptr
                 delete [] cstring;
                 cstring = nullptr;
             }
         }
-
-        delete [] formatted;    // dont need this anymore
+        delete [] formatted;    // dealloc temp memory
     }
 
     void Utils::getcstring(char*& dest, istream& istr) {
