@@ -128,7 +128,7 @@ namespace sdds {
 			// validInput flag is true if they do one of the above
 			// if they make an invalid input, keep prompting them
 			while (!validInput) {
-				cout << "\nEnter row number to display details or <ENTER> to continue:\n>";
+				cout << "Enter row number to display details or <ENTER> to continue:\n>";
 
 				if (cin.peek() != '\n') {
 					rowNum = ut.getint();
