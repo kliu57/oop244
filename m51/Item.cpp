@@ -56,7 +56,7 @@ namespace sdds {
         if (itemObject) {
             *this = itemObject;
         } else {
-            //setEmpty();
+            setEmpty();
         }
     }
 

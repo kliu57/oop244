@@ -165,13 +165,24 @@ namespace sdds {
         Date expDate = m_expiryDate;
 
         if (Item::m_state) {
-            // state is good, print SKU, instrription, on-hand quantity, needed quantity and price
+            // state is good, print SKU, instrription, on-hand quantity, needed quantity, price, expiry date
             if (Item::linear()) {       // linear format
                 expDate.formatted(true);
                 Item::display(ostr);    // call base class display
-                ostr << ((m_instr != nullptr) ? '*' : ' ');
-                //ostr << expDate;
-                expDate.write(ostr);
+
+                // print asterix if perishable has instructions
+                if (m_instr != nullptr) {
+                    if (static_cast<int>(strlen(m_instr))) {
+                        ostr << '*';
+                    }
+                    else {
+                        ostr << ' ';
+                    }
+                } else {
+                    ostr << ' ';
+                }
+
+                ostr << expDate;
 
             } else {    // descriptive format
                expDate.formatted(true);

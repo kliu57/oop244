@@ -139,7 +139,7 @@ namespace sdds {
 						validInput = true;	// exit loop
 						// display the selected item in a non-linear format
 						m_iProducts[printedIndexes[rowNum-1]]->linear(false);
-						m_iProducts[printedIndexes[rowNum-1]]->display(cout) << endl << endl;
+						m_iProducts[printedIndexes[rowNum-1]]->display(cout) << endl;
 					}
 				} else {
 					// user pressed <ENTER>
@@ -314,8 +314,5 @@ namespace sdds {
 
 		// the while loop ended so the user chose to quit
 		cout << "Exiting Program!" << endl;		// print ending message
-
-		// save data file here
-
 	}
 }

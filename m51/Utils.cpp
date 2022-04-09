@@ -40,14 +40,12 @@ namespace sdds {
         int mon = (month >= 1 && month <= 12 ? month : 13)-1;
         return days[mon] + int((mon == 1) * ((year % 4 == 0) && (year % 100 != 0)) || (year % 400 == 0));
     }
-   
-
 
     void Utils::alocpy(char*& destination, const char* source) {
         delete [] destination;   // release destination memory storage if any
         destination = nullptr;
         if (source != nullptr) {
-            destination = new (nothrow) char[strlen(source)+1];  // allocate new memory storage
+            destination = new (nothrow) char[static_cast<int>(strlen(source)+1)];  // allocate new memory storage
             if (destination != nullptr) {
                 strcpy(destination, source);	// copy data to newly allocated memory location
             } else {
@@ -55,21 +53,6 @@ namespace sdds {
             }
         }
     }
-
-    //void Utils::alocpy(char*& destination, const char* source) {
-    //    delete [] destination;   // release destination memory storage if any
-    //    destination = nullptr;
-    //    if (source != nullptr) {
-    //        destination = new (nothrow) char[static_cast<int>(strlen(source)+1)];  // allocate new memory storage
-    //        if (destination != nullptr) {
-    //            strcpy(destination, source);	// copy data to newly allocated memory location
-    //        } else {
-    //            cout << "Unexpected error in alocpy" << endl;
-    //        }
-    //    }
-    //}
-
-
 
     void Utils::aloConcat(char*& destination, const char* source) {
         int newSize = 0;
@@ -207,72 +190,66 @@ namespace sdds {
         return found;
     }
 
-    //void Utils::getFileCstring(char*& dest, ifstream& ifstr, char delim) {
-    //    const int maxSize = 200;        // this is how many characters we will attempt to read from the file before stopping
-    //                                    // if delimiter is not reached, we will dynamically allocate memory and read further
-    //    char fixedSizeString[maxSize];
-    //    char ch=0;
-    //    int i=0;
-    //    bool hitDelim = false;
-
-    //    ifstr.get(ch); 
-    //    if (ch == delim) {
-    //        hitDelim = true;
-    //    }
-
-    //    // read char by char until hitting delim or maxSize
-    //    for (i = 0; i < maxSize-1 && !ifstr.eof() && !hitDelim; i++) {
-    //        fixedSizeString[i] = ch;
-
-    //        // read the cString stopping at the size limit
-    //        if (i < maxSize-2) {
-    //            ifstr.get(ch); 
-
-    //            if (ch == delim) {
-    //                hitDelim = true;
-    //            }
-    //        }
-    //    }   
-    //    fixedSizeString[i] = '\0'; // make sure the cString is null terminated
-
-    //    ut.alocpy(dest, fixedSizeString);    // set string as final
-
-    //    // continue reading if still havent hit delimiter
-    //    while (!hitDelim && !ifstr.eof()) {
-
-    //        hitDelim = false;
-    //        ifstr.get(ch); 
-    //        if (ch == delim) {
-    //            hitDelim = true;
-    //        }
-    //        // read char by char until hitting delim or maxSize
-    //        for (i = 0; i < maxSize-1 && !ifstr.eof() && !hitDelim; i++) {
-    //            fixedSizeString[i] = ch;
-
-    //            // read the cString stopping at the size limit
-    //            if (i < maxSize-2) {
-    //                ifstr.get(ch); 
-
-    //                if (ch == delim) {
-    //                    hitDelim = true;
-    //                }
-    //            }
-    //        }   
-    //        fixedSizeString[i] = '\0'; // make sure the fixedSizeString is null terminated
-    //        
-    //        aloConcat(dest, fixedSizeString);    // concat and set as final
-    //    }
-
-    //    // if reached the end and delimiter not found, set stream to fail state
-    //    if (!hitDelim) {
-    //        ifstr.setstate(ios::failbit);
-    //    }
-    //}
-
     void Utils::getFileCstring(char*& dest, ifstream& ifstr, char delim) {
-        char temp[1000];
-        ifstr.getline(temp, 1000, delim);    //this already throws away the delim
-        ut.alocpy(dest, temp);
+        const int maxSize = 200;        // this is how many characters we will attempt to read from the file before stopping
+                                        // if delimiter is not reached, we will dynamically allocate memory and read further
+        char fixedSizeString[maxSize];
+        char ch=0;
+        int i=0;
+        bool hitDelim = false;
+
+        ifstr.get(ch); 
+        if (ch == delim) {
+            hitDelim = true;
+        }
+
+        // read char by char until hitting delim or maxSize
+        for (i = 0; i < maxSize-1 && !ifstr.eof() && !hitDelim; i++) {
+            fixedSizeString[i] = ch;
+
+            // read the cString stopping at the size limit
+            if (i < maxSize-2) {
+                ifstr.get(ch); 
+
+                if (ch == delim) {
+                    hitDelim = true;
+                }
+            }
+        }   
+        fixedSizeString[i] = '\0'; // make sure the cString is null terminated
+
+        ut.alocpy(dest, fixedSizeString);    // set string as final
+
+        // continue reading if still havent hit delimiter
+        while (!hitDelim && !ifstr.eof()) {
+
+            hitDelim = false;
+            ifstr.get(ch); 
+            if (ch == delim) {
+                hitDelim = true;
+            }
+            // read char by char until hitting delim or maxSize
+            for (i = 0; i < maxSize-1 && !ifstr.eof() && !hitDelim; i++) {
+                fixedSizeString[i] = ch;
+
+                // read the cString stopping at the size limit
+                if (i < maxSize-2) {
+                    ifstr.get(ch); 
+
+                    if (ch == delim) {
+                        hitDelim = true;
+                    }
+                }
+            }   
+            fixedSizeString[i] = '\0'; // make sure the fixedSizeString is null terminated
+            
+            aloConcat(dest, fixedSizeString);    // concat and set as final
+        }
+
+        // if reached the end and delimiter not found, set stream to fail state
+        if (!hitDelim) {
+            ifstr.setstate(ios::failbit);
+        }
     }
 
     void Utils::formatCstring(char*& cstring) {
