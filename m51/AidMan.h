@@ -20,7 +20,7 @@ namespace sdds {
     class AidMan {
         char* m_filename{};
         Menu m_mainMenu;
-        iProduct* m_iProducts[sdds_max_num_items]{};
+        iProduct* m_iProducts[sdds_max_num_items]{};    // array of iProduct pointers
         int m_iProductNum;
 
         // Returns an unsigned integer that is the user's selection of an option in the main menu of the system

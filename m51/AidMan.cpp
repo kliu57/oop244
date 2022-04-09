@@ -80,13 +80,14 @@ namespace sdds {
 	}
 
 	void AidMan::deallocate() {
+		// dealloc memory for each iProduct object
 		for (int i = 0; i < m_iProductNum; i++) {
-			delete [] m_iProducts[i];
+			delete m_iProducts[i];
 			m_iProducts[i] = nullptr;
 		}
 		m_iProductNum = 0;
 
-		delete [] m_filename;
+		delete [] m_filename;	// dealloc memory for filname char array
 		m_filename = nullptr;
 	}
 
