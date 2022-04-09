@@ -86,8 +86,8 @@ namespace sdds {
 		}
 		m_iProductNum = 0;
 
-		//delete [] m_filename;
-		//m_filename = nullptr;
+		delete [] m_filename;
+		m_filename = nullptr;
 	}
 
 	int AidMan::list(const char* sub_desc) {
@@ -260,12 +260,11 @@ namespace sdds {
 	}
 
 	AidMan::~AidMan() {
-		delete [] m_filename;
+		deallocate();
 	}
 
 	void AidMan::run() {
 		unsigned int userSelection = 0;
-		ifstream ifs;
 
 		userSelection = menu();		// run menu and store user selection, selection will be from 0 to NUM_MENU_OPTIONS
 
@@ -276,15 +275,11 @@ namespace sdds {
 				userSelection = 7;
 			}
 
-			cout << endl;
-
-
-
 			// user made a selection
 			// run the function associated with user selection
 
 			// print menu item that was just selected
-			cout << "****";
+			cout << "\n****";
 			m_mainMenu.printMenuOptionNameByNumber(cout, userSelection) << "****" << endl;
 
 			switch (userSelection) {
