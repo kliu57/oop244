@@ -65,12 +65,11 @@ namespace sdds {
                 strcpy(newDest, destination);	// copy data to newly allocated memory location
                 strcat(newDest, source);        // concatenate
                 newDest[newSize-1] = '\0';
-
-                delete [] destination;
-                destination = newDest;  // set pointer to point at new location
+                ut.alocpy(destination, newDest);    // copy concatenated data to destination
             } else {
                 cout << "Unexpected error" << endl;
             }
+            delete [] newDest;  // dealloc temp memory
         }
     }
 
