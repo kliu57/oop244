@@ -41,22 +41,24 @@ namespace sdds {
 	bool AidMan::validateFilename(const char* filename) const {
 		const int forbiddenSize = 10;
 		const char forbiddenChars[forbiddenSize] = "<>:\"/\\|?*";
-
 		bool filenameIsValid = true;
-		int filenameLen = static_cast<int>(strlen(filename));
-
-		if (filenameLen) {
-			// set flag to false if any character is a forbidden character
-			for (int i = 0; i < filenameLen && filenameIsValid; i++) {	// go through every char in this string
-				// go through all forbidden characters
-				for (int k = 0; k < forbiddenSize-1 && filenameIsValid; k++) {
-					if (filename[i] == forbiddenChars[k]) {
-						filenameIsValid = false;	// exit out of both loops
+		int filenameLen = 0;
+		
+		if (filename != nullptr) {
+			filenameLen = static_cast<int>(strlen(filename));
+			if (filenameLen) {
+				// set flag to false if any character is a forbidden character
+				for (int i = 0; i < filenameLen && filenameIsValid; i++) {	// go through every char in this string
+																			// go through all forbidden characters
+					for (int k = 0; k < forbiddenSize-1 && filenameIsValid; k++) {
+						if (filename[i] == forbiddenChars[k]) {
+							filenameIsValid = false;	// exit out of both loops
+						}
 					}
 				}
+			} else {
+				filenameIsValid = false;
 			}
-		} else {
-			filenameIsValid = false;
 		}
 		return filenameIsValid;
 	}
