@@ -92,7 +92,6 @@ namespace sdds {
 	}
 
 	int AidMan::list(const char* sub_desc) {
-		char* rowNumInputStr = nullptr;
 		int rowNum = 0;
 		int printedIndexes[sdds_max_num_items];	// stores indexes of all objects printed
 		int numPrinted = 0;
@@ -130,12 +129,9 @@ namespace sdds {
 			// if they make an invalid input, keep prompting them
 			while (!validInput) {
 				cout << "\nEnter row number to display details or <ENTER> to continue:\n>";
-				ut.getcstring(rowNumInputStr);		// if user just pressed enter rowNumInput will be set to nullptr
 
-				if (rowNumInputStr != nullptr) {
-					// convert user input to integer
-					// will convert to 0 if failed
-					rowNum = atoi(rowNumInputStr);
+				if (cin.peek() != '\n') {
+					rowNum = ut.getint();
 
 					// check if user input number is a valid item in list
 					if (rowNum >= 1 && rowNum <= numPrinted) {
@@ -153,6 +149,7 @@ namespace sdds {
 		} else {
 			cout << "The list is emtpy!" << endl;
 		}
+
 		return numPrinted;
 	}
 
