@@ -54,6 +54,10 @@ namespace sdds {
 
         // Read a cstring from console
         void getcstring(char*& dest, std::istream& istr = std::cin);
+
+        // Continue to prompt the user to enter a cstring until a nonempty cstring is read
+        // Safely copies cstring to destination location
+        void getcstring(char*& dest, const char* prompt = nullptr, const char* errMes = nullptr, std::istream& istr = std::cin);
     };
     extern Utils ut;
 }

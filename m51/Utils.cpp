@@ -276,28 +276,31 @@ namespace sdds {
         }
     }
 
+
     void Utils::formatCstring(char*& cstring) {
         int i = 0;
         int consecutiveSpaces = 0;
-        int size = 0;
+        int formattedSize = 0;
+        int cstringSize = 0;
         char ch = 0;
         char* formatted = nullptr;
         int formattedIndex = 0;
 
         if (cstring != nullptr) {
-            size = static_cast<int>(strlen(cstring) + 1);
+            cstringSize = static_cast<int>(strlen(cstring));
 
-            if (size) {
-                formatted = new (nothrow) char[size];  // dynamically make a copy of the cstring to store the formatted version
+            if (cstringSize) {
+                formattedSize = cstringSize + 1;
+                formatted = new (nothrow) char[formattedSize];  // dynamically make a copy of the cstring to store the formatted version
 
                 if (formatted != nullptr) {
                     // skip leading whitespace
-                    for (i = 0; i < size-1 && isspace(cstring[i]); i++) {
+                    for (i = 0; i < cstringSize && isspace(cstring[i]); i++) {
                     }
                     // now i is the index of the first nonspace character
 
                     // go through the rest of the characters and add them to formatted, changing tabs and newlines to spaces
-                    for (i = i; i < size-1; i++) {
+                    for (i = i; i < cstringSize; i++) {
                         ch = cstring[i];
 
                         if (isspace(ch)) {
@@ -309,28 +312,27 @@ namespace sdds {
                         }
                     }
 
-                    // if there are consectutive spaces at the end, remove them
-                    if (consecutiveSpaces) {
-                        formatted[size - consecutiveSpaces - 1] = '\0';
-                    } else {
-                        formatted[i] = '\0';
-                    }
+                    if (formattedIndex > 0) {
+                        // if there are consectutive spaces at the end, remove them
+                        if (consecutiveSpaces) {
+                            formatted[formattedSize - consecutiveSpaces] = '\0';
+                        } else {
+                            formatted[i] = '\0';
+                        }
 
-                    if (static_cast<int>(strlen(formatted))) {
                         // safely copy string
                         ut.alocpy(cstring, formatted);
-                    } else {
-                        // formatted string is empty so dealloc and set string to nullptr
-                        delete [] cstring;
-                        cstring = nullptr;
                     }
                 }
-            } else {
-                // string is already empty string from the start, dealloc and set to nullptr
-                delete [] cstring;
-                cstring = nullptr;
             }
         }
+
+        if (!formattedIndex) {
+            // formatted string is empty so set cstring to nullptr
+            delete [] cstring;
+            cstring = nullptr;
+        }
+
         delete [] formatted;    // dealloc temp memory
     }
 
@@ -345,5 +347,28 @@ namespace sdds {
             delete [] dest;
             dest = nullptr;
         }
+    }
+
+    void Utils::getcstring(char*& dest, const char* prompt, const char* errMes, istream& istr) {
+        string inputString;
+
+        if (prompt != nullptr) {
+            cout << prompt;  // display prompt
+        }
+
+        getline(istr, inputString); // get user input from console
+
+        while (istr.fail() || !inputString.length()) {  // prompt user again if valid cstring was not read
+
+            if (errMes != nullptr) {
+                cout << errMes << ", retry: ";
+            } else {
+                cout << "Invalid entry, retry: ";  // user did not provide an error message so print the default one
+            }
+
+            getline(istr, inputString); // get user input from console
+        }
+
+        ut.alocpy(dest, inputString.c_str());
     }
 }

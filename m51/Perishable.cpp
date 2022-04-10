@@ -203,12 +203,12 @@ namespace sdds {
         delete [] m_instr;   // delete instr
         m_instr = nullptr;
 
-        expDateNum = ut.getint(100000, 999999, "Expiry date (YYMMDD): ", nullptr, istr); // prompt for expiry
-        m_expiryDate = Date(expDateNum);
+        expDateNum = ut.getint(100000, 999999, "Expiry date (YYMMDD): ", nullptr, istr); // prompt for expiry date
+        m_expiryDate = Date(expDateNum);    // create date object
 
         cout << "Handling Instructions, ENTER to skip: ";   // prompt for <ENTER>
 
-        if (istr.peek() != '\n') {  // read instr dynamically
+        if (istr.peek() != '\n') {
             ut.getcstring(m_instr, istr);    // get instr
 
         } else {    // skip reading instr
@@ -216,7 +216,10 @@ namespace sdds {
             m_instr = nullptr;
         }
 
-        if (istr.fail()) m_state = "Perishable console date entry failed!";
+        // set item state to failed if stream failed or date is invalid
+        if (istr.fail() || !m_expiryDate) {
+            m_state = "Perishable console date entry failed!";
+        }
 
         return istr;
     }
