@@ -238,7 +238,7 @@ namespace sdds {
 			if (index != -1) {
 				// item with this sku exists in database
 				// print item and confirmation message and menu
-				cout << "Following item will be removed:\n";
+				cout << "Following item will be removed: \n";
 				m_iProducts[index]->linear(false);				// set to descriptive format
 				m_iProducts[index]->display(cout) << endl;		// display item
 
