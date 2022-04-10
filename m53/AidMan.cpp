@@ -124,7 +124,7 @@ namespace sdds {
 
 			// go through each index and print the item
 			for (int i = 0; i < numProducts; i++) {
-				cout << setw(4) << i+1 << " | ";		// print row number
+				cout << setw(4) << storedIndexes[i]+1 << " | ";			// print row number which is index+1
 				m_iProducts[storedIndexes[i]]->linear(true);			// set to linear
 				m_iProducts[storedIndexes[i]]->display(cout) << endl;	// print item
 			}
@@ -224,7 +224,7 @@ namespace sdds {
 
 			// go through each index and print the item
 			for (int i = 0; i < numProducts; i++) {
-				cout << setw(4) << i+1 << " | ";		// print row number
+				cout << setw(4) << storedIndexes[i]+1 << " | ";			// print row number which is index+1
 				m_iProducts[storedIndexes[i]]->linear(true);			// set to linear
 				m_iProducts[storedIndexes[i]]->display(cout) << endl;	// print item
 			}
