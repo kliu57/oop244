@@ -101,7 +101,6 @@ namespace sdds {
 		int rowNum = 0;
 		int storedIndexes[sdds_max_num_items];	// stores indexes of all objects to be printed
 		int numProducts = 0;	// stores number of total products to be printed
-		bool validInput = false;
 
 		// First store all indexes of items to be printed
 		if (sub_desc == nullptr) {
@@ -125,7 +124,7 @@ namespace sdds {
 
 			// go through each index and print the item
 			for (int i = 0; i < numProducts; i++) {
-				cout << setw(4) << i+1 << " | ";		// print row number
+				cout << setw(4) << storedIndexes[i]+1 << " | ";			// print row number which is index+1
 				m_iProducts[storedIndexes[i]]->linear(true);			// set to linear
 				m_iProducts[storedIndexes[i]]->display(cout) << endl;	// print item
 			}
@@ -137,9 +136,13 @@ namespace sdds {
 			rowNum = ut.getintOrEnter(1, numProducts, "Enter row number to display details or <ENTER> to continue:\n> ", "Invalid entry!\nEnter row number to display details or <ENTER> to continue:\n> ");
 
 			if (rowNum != -1) {
-				// display the selected item in a non-linear format
-				m_iProducts[storedIndexes[rowNum-1]]->linear(false);
-				m_iProducts[storedIndexes[rowNum-1]]->display(cout) << endl;
+				if (rowNum >= 1 && rowNum <= numProducts) {
+					// display the selected item in a non-linear format
+					m_iProducts[storedIndexes[rowNum-1]]->linear(false);
+					m_iProducts[storedIndexes[rowNum-1]]->display(cout) << endl;
+				} else{
+					cout << "Unexpected error in list " << rowNum << endl;
+				}
 			}
 		} else {
 			cout << "The list is emtpy!" << endl;
