@@ -300,27 +300,26 @@ namespace sdds {
 				ch = ifs.peek();
 
 				if (isdigit(ch)) {
-					// check if iProduct array has room to load the item/perishable
-						if (ch == '1') {
-							// perishable
-							m_iProducts[m_iProductNum] = new Perishable();	// create a new Perishable item in the next available iProduct Pointers element
-						} else {
-							// item
-							m_iProducts[m_iProductNum] = new Item();		// create a new Item in the next available iProduct Pointers element
-						}
+					if (ch == '1' || ch == '2' || ch == '3') {
+						// perishable is 10000-39999
+						m_iProducts[m_iProductNum] = new Perishable();	// create a new Perishable item in the next available iProduct Pointers element
+					} else {
+						// item is 40000, 99999
+						m_iProducts[m_iProductNum] = new Item();		// create a new Item in the next available iProduct Pointers element
+					}
 
-						// load data from file stream into object
-						// since load function is virtual, dynamic binding will occur
-						m_iProducts[m_iProductNum]->load(ifs);
+					// load data from file stream into object
+					// since load function is virtual, dynamic binding will occur
+					m_iProducts[m_iProductNum]->load(ifs);
 
-						// check if item/perishable was loaded succesfully (in good state)
-						if (m_iProducts[m_iProductNum]) {
-							m_iProductNum++;	// increase iProduct counter
-						} else {
-							// item was not loaded sucessfully
-							delete m_iProducts[m_iProductNum];	// delete item
-							m_iProducts[m_iProductNum] = nullptr;
-						}
+					// check if item/perishable was loaded succesfully (in good state)
+					if (m_iProducts[m_iProductNum]) {
+						m_iProductNum++;	// increase iProduct counter
+					} else {
+						// item was not loaded sucessfully
+						delete m_iProducts[m_iProductNum];	// delete item
+						m_iProducts[m_iProductNum] = nullptr;
+					}
 				} else {
 					// invalid record found in file
 					ifs.setstate(ios::failbit);		// set stream to fail state, this quits the loop
