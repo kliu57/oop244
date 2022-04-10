@@ -99,37 +99,39 @@ namespace sdds {
 	// menu item 1
 	int AidMan::list(const char* sub_desc) {
 		int rowNum = 0;
-		int printedIndexes[sdds_max_num_items];	// stores indexes of all objects printed
-		int numPrinted = 0;
+		int storedIndexes[sdds_max_num_items];	// stores indexes of all objects to be printed
+		int numProducts = 0;	// stores number of total products to be printed
 		bool validInput = false;
 
-		// print list header
-		cout << " ROW |  SKU  | Description                         | Have | Need |  Price  | Expiry" << endl;
-		cout << "-----+-------+-------------------------------------+------+------+---------+-----------" << endl;
-
+		// First store all indexes of items to be printed
 		if (sub_desc == nullptr) {
 			// print all items
 			for (int i = 0; i < m_iProductNum; i++) {
-				cout << setw(4) << i+1 << " | ";		// print row number
-				m_iProducts[i]->linear(true);			// set to linear
-				m_iProducts[i]->display(cout) << endl;	// print item
-				printedIndexes[numPrinted++] = i;
+				storedIndexes[numProducts++] = i;		// store index
 			}
 		} else {
 			// print only the items containing the sub_desc in their description
 			for (int i = 0; i < m_iProductNum; i++) {
 				if (*m_iProducts[i] == sub_desc) {
-					cout << setw(4) << i+1 << " | ";		// print row number
-					m_iProducts[i]->linear(true);			// set to linear
-					m_iProducts[i]->display(cout) << endl;	// print item
-					printedIndexes[numPrinted++] = i;
+					storedIndexes[numProducts++] = i;		// store index
 				}
 			}
 		}
 
-		cout << "-----+-------+-------------------------------------+------+------+---------+-----------" << endl;
+		// If there are more than zero stored indexes, print them
+		if (numProducts) {
+			cout << " ROW |  SKU  | Description                         | Have | Need |  Price  | Expiry" << endl;
+			cout << "-----+-------+-------------------------------------+------+------+---------+-----------" << endl;
 
-		if (numPrinted) {
+			// go through each index and print the item
+			for (int i = 0; i < numProducts; i++) {
+				cout << setw(4) << i+1 << " | ";		// print row number
+				m_iProducts[storedIndexes[i]]->linear(true);			// set to linear
+				m_iProducts[storedIndexes[i]]->display(cout) << endl;	// print item
+			}
+
+			cout << "-----+-------+-------------------------------------+------+------+---------+-----------" << endl;
+
 			// prompt user to press <ENTER> or input an int between 1 and number of records printed
 			// validInput flag is true if they do one of the above
 			// if they make an invalid input, keep prompting them
@@ -140,12 +142,12 @@ namespace sdds {
 					rowNum = ut.getint();
 
 					// check if user input number is a valid item in list
-					if (rowNum >= 1 && rowNum <= numPrinted) {
+					if (rowNum >= 1 && rowNum <= numProducts) {
 						// user entered an int between 1 and num records printed
 						validInput = true;	// exit loop
-						// display the selected item in a non-linear format
-						m_iProducts[printedIndexes[rowNum-1]]->linear(false);
-						m_iProducts[printedIndexes[rowNum-1]]->display(cout) << endl;
+											// display the selected item in a non-linear format
+						m_iProducts[storedIndexes[rowNum-1]]->linear(false);
+						m_iProducts[storedIndexes[rowNum-1]]->display(cout) << endl;
 					}
 				} else {
 					// user pressed <ENTER>
@@ -156,7 +158,7 @@ namespace sdds {
 			cout << "The list is emtpy!" << endl;
 		}
 
-		return numPrinted;
+		return numProducts;
 	}
 
 	// menu item 7
