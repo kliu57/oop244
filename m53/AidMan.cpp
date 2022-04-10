@@ -206,12 +206,35 @@ namespace sdds {
 		int index = 0;
 		char* desc = nullptr;	// alloc temp memory to this variable
 		int confirmation = 0;
+		int storedIndexes[sdds_max_num_items];	// stores indexes of all objects to be printed
+		int numProducts = 0;	// stores number of total products printed
+		bool validInput = false;
 
 		ut.getcstring(desc, "Item description: ", "Invalid description");	// get desc from user input
 
-		// list all the items in database that contains the desc entered
-		if (list(desc)) {	
-			sku = ut.getint(10000, 99999, "Enter SKU: ", "Invalid Integer");	// get sku from console
+		// store indexes of the items containing the desc in their description
+		for (int i = 0; i < m_iProductNum; i++) {
+			if (*m_iProducts[i] == desc) {
+				storedIndexes[numProducts++] = i;		// store index
+			}
+		}
+
+		// If there are more than zero stored indexes, print them
+		if (numProducts) {
+			cout << " ROW |  SKU  | Description                         | Have | Need |  Price  | Expiry" << endl;
+			cout << "-----+-------+-------------------------------------+------+------+---------+-----------" << endl;
+
+			// go through each index and print the item
+			for (int i = 0; i < numProducts; i++) {
+				cout << setw(4) << i+1 << " | ";		// print row number
+				m_iProducts[storedIndexes[i]]->linear(true);			// set to linear
+				m_iProducts[storedIndexes[i]]->display(cout) << endl;	// print item
+			}
+
+			cout << "-----+-------+-------------------------------------+------+------+---------+-----------" << endl;
+
+			// prompt user to input an SKU
+			sku = ut.getint(10000, 99999, "Enter SKU: ", "Invalid Integer");
 			index = search(sku);	// get index in array of pointers that points at object with this sku
 
 			if (index != -1) {
@@ -220,7 +243,7 @@ namespace sdds {
 				cout << "Following item will be removed:\n";
 				m_iProducts[index]->linear(false);				// set to descriptive format
 				m_iProducts[index]->display(cout) << endl;		// display item
-				
+
 				// prompt user for confirmation
 				confirmation = ut.getint(0, 1, "Are you sure?\n1- Yes!\n0- Exit\n> ", "Invalid Integer");
 
@@ -229,7 +252,6 @@ namespace sdds {
 				} else {
 					cout << "Aborted!\n";
 				}
-
 			} else {
 				cout << "SKU not found!\n";
 			}
