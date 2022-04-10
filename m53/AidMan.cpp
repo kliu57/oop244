@@ -247,6 +247,7 @@ namespace sdds {
 
 				if (confirmation) {
 					remove(index);	// remove item
+					cout << "Item Removed!\n";
 				} else {
 					cout << "Aborted!\n";
 				}
