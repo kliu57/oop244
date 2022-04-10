@@ -88,7 +88,7 @@ namespace sdds {
     }
 
     Item::operator bool() const {
-        return m_state && m_desc;
+        return m_state && (m_desc != nullptr);
     }
 
     void Item::clear() {
@@ -128,7 +128,7 @@ namespace sdds {
     }
 
     ofstream& Item::save(ofstream& ofstr) const {
-        if (m_state) {  // only proceed if state is good
+        if (*this) {  // only proceed if item is valid
             ofstr << m_sku << '\t';
             ofstr << m_desc << '\t';
             ofstr << m_qty << '\t';
@@ -311,8 +311,8 @@ namespace sdds {
         const int descWidth = 35;
         double neededFunds = 0.0;
         char tempDesc[descWidth+1];
-        if (m_state) {
-            // state is good, print SKU, description, on-hand quantity, needed quantity and price
+        if (*this) {
+            // item is valid, print SKU, description, on-hand quantity, needed quantity and price
             if (m_isLinear) {   // linear format
                 ostr << left << setw(4) << m_sku << " | ";
 
@@ -336,7 +336,7 @@ namespace sdds {
                     neededFunds = ((double)m_qtyNeeded - (double)m_qty) * m_price;
                 }
                 ostr << "AMA Item:" << endl;
-                ostr << m_sku << ": " << m_desc << endl;
+                ostr << m_sku << ": " << ((m_desc != nullptr) ? m_desc : "") << endl;
                 ostr << "Quantity Needed: " << m_qtyNeeded << endl;
                 ostr << "Quantity Available: " << m_qty << endl;
                 ostr << "Unit Price: $" << fixed << setprecision(2) << m_price << endl;
@@ -345,8 +345,9 @@ namespace sdds {
                 ostr.precision(6);
             }
         } else {
-            ostr << (const char*)m_state;   // print state since bad
+            ostr << m_state;   // print state since bad
         }
+
         return ostr;
     }
 
@@ -363,14 +364,16 @@ namespace sdds {
         cout << "AMA Item:" << endl;
         cout << "SKU: " << m_sku << endl;   // display the sku
 
-        cout << "Description: ";        // prompt for desc
-        ut.getcstring(m_desc, istr);    // get desc
+        ut.getcstring(m_desc, "Description: ", "Invalid description");  // get desc
 
         m_qtyNeeded = ut.getint(1, 9999, "Quantity Needed: ", "Invalid Integer");   // prompt/get qty needed
         m_qty = ut.getint(0, m_qtyNeeded, "Quantity On Hand: ", "Invalid Integer"); // prompt/get qty
         m_price = ut.getdouble(0.0, 9999.0, "Unit Price: $", "Invalid number");     // prompt/get price
 
-        if (istr.fail()) m_state = "Console entry failed!";
+        // set item state to fail if desc is invalid or stream failed
+        if (istr.fail() || m_desc == nullptr) {
+            m_state = "Console entry failed!";
+        }
         
         return istr;
     }

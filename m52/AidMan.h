@@ -40,6 +40,7 @@ namespace sdds {
 
         // menu item 1
         // prints all items, asks user if they want to see more details
+        // returns number of items printed
         int list(const char* sub_desc = nullptr);
 
         // menu item 2

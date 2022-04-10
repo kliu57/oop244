@@ -49,7 +49,7 @@ namespace sdds {
 			if (filenameLen) {
 				// set flag to false if any character is a forbidden character
 				for (int i = 0; i < filenameLen && filenameIsValid; i++) {	// go through every char in this string
-																			// go through all forbidden characters
+					// go through all forbidden characters
 					for (int k = 0; k < forbiddenSize-1 && filenameIsValid; k++) {
 						if (filename[i] == forbiddenChars[k]) {
 							filenameIsValid = false;	// exit out of both loops
@@ -59,6 +59,8 @@ namespace sdds {
 			} else {
 				filenameIsValid = false;
 			}
+		} else {
+			filenameIsValid = false;
 		}
 		return filenameIsValid;
 	}
@@ -72,7 +74,7 @@ namespace sdds {
 
 			for (int i = 0; i < m_iProductNum; i++) {
 				m_iProducts[i]->save(ofs);
-				ofs << '\n';
+				ofs << endl;
 			}
 
 			// close file
@@ -189,7 +191,7 @@ namespace sdds {
 						m_iProducts[m_iProductNum++] = newProduct;
 					} else {
 						// display product and delete it
-						newProduct->display(cout);
+						newProduct->display(cout) << endl;
 						delete newProduct;
 					}
 				} else {	// sku already present in DB
@@ -216,27 +218,20 @@ namespace sdds {
 		save();			// Saves all the already existing m_iProducts
 		deallocate();	// Deallocates all the resources of the AidMan class making it ready to load new information
 
-		// keep prompting for file name until a valid one is entered
+		// get filename and validate
+		ut.getcstring(m_filename, "Enter file name: ", "Invalid filename");  // get filename
+		ut.formatCstring(m_filename);	// trim leading/trailing whitespace and set internal tabs and newlines to spaces
+		if (m_filename != nullptr) {
+			filenameValid = validateFilename(m_filename);	// check filename for forbidden characters
+		}
+
+		// keep prompting for filename until a valid one is entered
 		while (!filenameValid) {
-			cout << "Enter file name: ";
-			ut.getcstring(m_filename);
-
-			// check that get filename worked
-			// if it did not work prompt user again
+			// get filename and validate
+			ut.getcstring(m_filename, "Invalid filename, retry: ", "Invalid filename");  // get filename
+			ut.formatCstring(m_filename);	// trim leading/trailing whitespace and set internal tabs and newlines to spaces
 			if (m_filename != nullptr) {
-				if (static_cast<int>(strlen(m_filename))) {
-					// trim leading and trailing spaces and set tabs, \n, to ' '
-					// filename set to nullptr if filename only has spaces
-					ut.formatCstring(m_filename);
-
-					if (m_filename != nullptr) {
-						// check filename for forbidden characters
-						filenameValid = validateFilename(m_filename);
-					}
-				}
-			}
-			if (!filenameValid) {
-				cout << "Invalid file name!" << endl;
+				filenameValid = validateFilename(m_filename);	// check filename for forbidden characters
 			}
 		}
 
@@ -284,7 +279,7 @@ namespace sdds {
 		} else {
 			// opening stream was unsuccessful
 			cout << "Failed to open " << m_filename << " for reading!" << endl;
-			selection = ut.getint(0, 1, "Would you like to create a new data file?\n1- Yes!\n0- Exit\n");
+			selection = ut.getint(0, 1, "Would you like to create a new data file?\n1- Yes!\n0- Exit\n> ");
 			// create empty file
 			if (selection == 1) {
 				ofs.open(m_filename);
