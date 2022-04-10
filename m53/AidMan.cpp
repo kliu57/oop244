@@ -207,7 +207,6 @@ namespace sdds {
 		int confirmation = 0;
 		int storedIndexes[sdds_max_num_items];	// stores indexes of all objects to be printed
 		int numProducts = 0;	// stores number of total products printed
-		bool validInput = false;
 
 		ut.getcstring(desc, "Item description: ", "Invalid description");	// get desc from user input
 
