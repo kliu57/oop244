@@ -101,7 +101,6 @@ namespace sdds {
 		int rowNum = 0;
 		int storedIndexes[sdds_max_num_items];	// stores indexes of all objects to be printed
 		int numProducts = 0;	// stores number of total products to be printed
-		bool validInput = false;
 
 		// First store all indexes of items to be printed
 		if (sub_desc == nullptr) {
