@@ -38,6 +38,10 @@ namespace sdds {
         // Returns the read integer
         int getint(int min, int max, const char* prompt = nullptr, const char* errMes = nullptr, std::istream& istr = std::cin);
 
+        // Continue to prompt the user to enter an integer until a valid one within the given range is read or user pressed <ENTER>
+        // Returns the read integer or -1 if the user pressed <ENTER>
+        int getintOrEnter(int min, int max, const char* prompt = nullptr, const char* errMes = nullptr, std::istream& istr = std::cin);
+
         // Continue to prompt the user to enter a double until a valid one within the given range is read
         // Returns the read double
         double getdouble(double min, double max, const char* prompt = nullptr, const char* errMes = nullptr, std::istream& istr = std::cin);

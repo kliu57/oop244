@@ -154,6 +154,68 @@ namespace sdds {
         return input;
     }
 
+    int Utils::getintOrEnter(int min, int max, const char* prompt, const char* errMes, istream& istr) {
+        int input = -1;
+        char ch = 0;
+        bool validInput = false;
+
+        if (prompt != nullptr) {
+            cout << prompt;  // display prompt
+        }
+
+        // check if user pressed enter
+        ch = istr.peek();
+
+        if (ch != '\n') {
+            istr >> input;    // read from user input, input stream object will be set to fail state if user input is not an integer
+            if (!istr.fail()) {
+                if (input >= min && input <= max) {
+                    validInput = true;
+                }
+            }
+            
+            // clear buffer
+            istr.clear();
+            istr.ignore(1000, '\n');
+
+            while (!validInput) {     // prompt user again until valid input
+
+                if (errMes != nullptr) {
+                    cout << errMes;
+                } else {
+                    cout << "Value out of range [" << min << "<=val<=" << max << "], or press <ENTER>: ";  // user did not provide an error message so print the default one
+                }
+
+                ch = istr.peek();
+
+                if (ch != '\n') {
+                    istr >> input;    // read from user input, input stream object will be set to fail state if user input is not an integer
+                    if (!istr.fail()) {
+                        if (input >= min && input <= max) {
+                            validInput = true;
+                        }
+                    }
+
+                    // clear buffer
+                    istr.clear();
+                    istr.ignore(1000, '\n');
+                } else {
+                    istr.clear();
+                    istr.ignore();
+                    validInput = true;
+                    input = -1;
+                }
+            }
+        } else {
+            istr.clear();
+            istr.ignore();
+            validInput = true;
+            input = -1;
+        }
+
+        return input;
+    }
+
     double Utils::getdouble(double min, double max, const char* prompt, const char* errMes, istream& istr) {
         double input = 0.0;
         bool inRange = false;

@@ -133,26 +133,13 @@ namespace sdds {
 			cout << "-----+-------+-------------------------------------+------+------+---------+-----------" << endl;
 
 			// prompt user to press <ENTER> or input an int between 1 and number of records printed
-			// validInput flag is true if they do one of the above
-			// if they make an invalid input, keep prompting them
-			while (!validInput) {
-				cout << "Enter row number to display details or <ENTER> to continue:\n> ";
+			// result is -1 if they press <ENTER>
+			rowNum = ut.getintOrEnter(1, numProducts, "Enter row number to display details or <ENTER> to continue:\n> ", "Invalid entry!\nEnter row number to display details or <ENTER> to continue:\n> ");
 
-				if (cin.peek() != '\n') {
-					rowNum = ut.getint();
-
-					// check if user input number is a valid item in list
-					if (rowNum >= 1 && rowNum <= numProducts) {
-						// user entered an int between 1 and num records printed
-						validInput = true;	// exit loop
-											// display the selected item in a non-linear format
-						m_iProducts[storedIndexes[rowNum-1]]->linear(false);
-						m_iProducts[storedIndexes[rowNum-1]]->display(cout) << endl;
-					}
-				} else {
-					// user pressed <ENTER>
-					validInput = true;	// exit loop
-				}
+			if (rowNum != -1) {
+				// display the selected item in a non-linear format
+				m_iProducts[storedIndexes[rowNum-1]]->linear(false);
+				m_iProducts[storedIndexes[rowNum-1]]->display(cout) << endl;
 			}
 		} else {
 			cout << "The list is emtpy!" << endl;
