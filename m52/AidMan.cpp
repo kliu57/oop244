@@ -72,6 +72,7 @@ namespace sdds {
 
 			for (int i = 0; i < m_iProductNum; i++) {
 				m_iProducts[i]->save(ofs);
+				ofs << '\n';
 			}
 
 			// close file
@@ -376,5 +377,7 @@ namespace sdds {
 
 		// the while loop ended so the user chose to quit
 		cout << "Exiting Program!" << endl;		// print ending message
+
+		save();		// save file with contents of the iProduct pointers array
 	}
 }
