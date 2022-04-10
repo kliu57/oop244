@@ -5,6 +5,8 @@
 *.opensdf
 *.db
 *.sln
+*.vcxproj
+*.filters
 *.docx
 *.tmp
 Debug/
