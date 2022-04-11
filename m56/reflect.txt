@@ -1,0 +1,33 @@
+OOP Project Reflection
+Katie Liu
+kliu57@myseneca.ca
+018889121
+Sun Apr 10 2022
+
+In this project I learned to use derived classes and virtual functions to make a program. I was able to use 
+many types of polymorphism in this project, such as overloading, shadowing, and virtual functions. I did 
+not use function templates, but I thought of many places where I could use them to make my code 
+shorter. I learned about the benefits of using virtual functions, as it allows for dynamic binding. We can 
+store pointers to Items and Perishables in the same array because of dynamic binding. If we need to 
+display an Item or Perishable with the display function, the compiler will look at the type of the object 
+and then run the implementation of the display function of that class. Because we implemented derived 
+classes and used virtual functions and shadowing, it was very easy to write the functions in my AidMan 
+module. After this project, I understand the concepts, and the benefits of polymorphism more. I also 
+learned to work with ofstream class and ifstream class objects to read and write from a file and read and 
+write to the console. I learned to read user input in a foolproof manner and do validation checking. I also 
+learned to sort data in an array.
+
+I learned a lot about C++ and dynamic memory allocation this semester. I am also more clear about 
+pointers, addresses, and references than I was back when I was taking IPC144. Overall, I enjoyed 
+working on the assignments and although I still dislike debugging, I am getting better at locating the 
+source of my bugs with each assignment.
+
+Issues that caused me difficulty was debugging my valgrind error. I had one memory leak and I could not 
+figure out where it came from for many hours. I usually search for all the cases of the "new" keyword to 
+locate my dynamic memory allocations, but this time I was allocating memory in a function I created in 
+the Utils module, so it was not easily locatable. Another error that cost me a lot of time was my program 
+would encounter runtime errors when the delete keyword was used on a character pointer, even 
+though I initialized all those character pointers to nullptr in my constructors. I could not find exactly 
+what was the problem, but I fixed the issue by initializing those pointers to null in the header files using 
+{}.
+	
