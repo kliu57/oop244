@@ -383,7 +383,7 @@ namespace sdds {
 		// go through each index and print the item if the item qty = qtyNeeded
 		for (int i = 0; i < m_iProductNum; i++) {
 			if (m_iProducts[i]->qtyNeeded() == m_iProducts[i]->qty()) {
-				ofs << setw(4) << numShipped++ << " | ";		// print row number
+				ofs << setw(4) << ++numShipped << " | ";		// print row number
 				m_iProducts[i]->linear(true);					// set to linear
 				m_iProducts[i]->display(ofs) << endl;			// print item
 				remove(i);										// remove item from iProduct Pointers array
