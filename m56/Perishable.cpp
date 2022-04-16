@@ -36,6 +36,7 @@ namespace sdds {
     }
 
     Perishable::Perishable(const Perishable& perishableObject) : Item(perishableObject) {
+        m_instr = nullptr;
         *this = perishableObject;
     }
 

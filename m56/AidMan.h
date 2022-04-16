@@ -18,7 +18,7 @@ namespace sdds {
     const int NUM_MENU_OPTIONS = 7;
     const int sdds_max_num_items = 100;
     class AidMan {
-        char* m_filename{};
+        char* m_filename;
         Menu m_mainMenu;
         iProduct* m_iProducts[sdds_max_num_items]{};    // array of iProduct pointers
         int m_iProductNum;

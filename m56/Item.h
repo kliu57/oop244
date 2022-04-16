@@ -16,7 +16,7 @@ that my professor provided to complete my workshops and assignments.
 namespace sdds {
     // An Item is a concrete Item to keep track of the quantity and on-hand-quantity items to be prepared for shipping
     class Item : public iProduct {
-        char* m_desc{};
+        char* m_desc;
         int m_qty;
         int m_qtyNeeded;
         double m_price;

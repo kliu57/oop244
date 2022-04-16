@@ -14,7 +14,7 @@ that my professor provided to complete my workshops and assignments.
 #include <iostream>
 namespace sdds {
     class Status {
-        char* m_desc{};
+        char* m_desc;
         int m_code;
     public:
         // constructor - initialize object m_desc to argument if given and m_code to 0

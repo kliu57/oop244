@@ -17,7 +17,7 @@ namespace sdds {
     // An Perishable is a concrete Perishable to keep track of the quantity and on-hand-quantity perishables to be prepared for shipping
     class Perishable : public Item {
         Date m_expiryDate;
-        char* m_instr{};
+        char* m_instr;
 
         // set object to invalid state
         void setEmpty();

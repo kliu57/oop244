@@ -53,10 +53,15 @@ namespace sdds {
     }
 
     Item::Item(const Item& itemObject) : iProduct() {
+        m_desc = nullptr;
+        m_qty = 0;
+        m_qtyNeeded = 0;
+        m_price = 0;
+        m_isLinear = false;
+        m_sku = 0;
+
         if (itemObject) {
             *this = itemObject;
-        } else {
-            setEmpty();
         }
     }
 

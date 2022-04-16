@@ -17,9 +17,11 @@ using namespace std;
 namespace sdds {
 	// public member functions
 
+	// constructor
 	Status::Status(const char* desc) {
-		ut.alocpy(m_desc, desc);	// safely alloc dynamic memory - copy desc of argument object to m_desc
+		m_desc = nullptr;
 		m_code = 0;
+		ut.alocpy(m_desc, desc);	// safely alloc dynamic memory - copy desc of argument object to m_desc
 	}
 
 	Status::~Status() {
@@ -28,6 +30,8 @@ namespace sdds {
 
 	// copy constructor
 	Status::Status(const Status& statusObject) {
+		m_desc = nullptr;
+		m_code = 0;
 		*this = statusObject;
 	}
 

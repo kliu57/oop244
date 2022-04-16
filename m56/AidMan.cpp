@@ -516,6 +516,7 @@ namespace sdds {
 
 	// public member functions
 
+	// constructor
 	AidMan::AidMan() : m_mainMenu{NUM_MENU_OPTIONS, "1- List Items\n2- Add Item\n3- Remove Item\n4- Update Quantity\n5- Sort\n6- Ship Items\n7- New/Open Aid Database\n---------------------------------\n"} {
 		m_filename = nullptr;
 		m_iProductNum = 0;

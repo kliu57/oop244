@@ -44,17 +44,24 @@ namespace sdds {
     void Utils::alocpy(char*& destination, const char* source) {
         int sourceSize = 0;
         int newDestSize = 0;
+
         delete [] destination;   // release destination memory storage if any
         destination = nullptr;
+
         if (source != nullptr) {
             sourceSize = static_cast<int>(strlen(source));
+
             // only proceed to copy if source has content
+            // no need to check if source and dest memory addr are the same, since we deallocated dest
+            // if they were the same address, after dealloc sourceSize is 0
             if (sourceSize) {
-                newDestSize = sourceSize+1;
+                newDestSize = sourceSize + 1;
                 destination = new (nothrow) char[newDestSize];  // allocate new memory storage
+
                 if (destination != nullptr) {
                     strcpy(destination, source);	// copy data to newly allocated memory location
-                } else {
+                }
+                else {
                     cout << "Unexpected error in alocpy" << endl;
                 }
             }
