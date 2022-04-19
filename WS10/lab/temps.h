@@ -40,24 +40,19 @@ namespace sdds {
     template <typename type>
     void printCollection(const Collection<type>& coll, const char title[]) {
         int size = coll.size();
-        
-        
 
         // first print the title
-        cout << title << endl;
+        std::cout << title << std::endl;
 
         if (size) {
             // loop through the elements of the Collection and print each element in a new line
             for (int i = 0; i < size; i++) {
-                
-                cout << coll[i] << endl;            // print one element plus newline
+
+                std::cout << coll[i] << std::endl;            // print one element plus newline
                 //coll[i].display(cout);   // why doesnt this work?
             }
         }
-
-
     }
-
 }
 
 #endif // ! SDDS_TEMPS_H_
